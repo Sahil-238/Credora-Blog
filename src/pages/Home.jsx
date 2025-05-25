@@ -53,12 +53,25 @@ function Home() {
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-center max-w-2xl">
             Master coding skills with our comprehensive tutorials and hands-on practice
-          </p>
-          <button
+          </p>          <button
             onClick={() => navigate('/introduction')}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300"
+            className="bg-transparent hover:bg-white/10 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 flex items-center border-2 border-white"
           >
             Get Started
+            <svg
+              className="w-5 h-5 ml-2 transform transition-transform duration-300 group-hover:translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
+            </svg>
           </button>
         </div>
       </div>
