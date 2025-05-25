@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Carousel from '../components/Carousel';
+import ExploreCards from '../components/ExploreCards';
 import backgroundVideo from '../video/83274-581386222.mp4';
+import '../styles/home.css';
 
 function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,7 +16,10 @@ function Home() {
     "Java",
     "C++",
     "Ruby",
-    "Go",
+    "C",
+    "SQL",
+    "Dart",
+    "R"
   ];
 
   const toggleMenu = () => {
@@ -30,6 +35,28 @@ function Home() {
       navigate('/introduction');
     }
   };
+
+  const webDevCourses = [
+    { title: "JavaScript", path: "/javascript" },
+    { title: "HTML", path: "/html" },
+    { title: "CSS", path: "/css" },
+    { title: "ReactJS", path: "/react" },
+    { title: "Node.js", path: "/nodejs" },
+    { title: "Django", path: "/django" },
+    { title: "Frontend Development", path: "/frontend" },
+    { title: "Backend Development", path: "/backend" }
+  ];
+
+  const aiMlCourses = [
+    { title: "Machine Learning", path: "/machine-learning" },
+    { title: "Data Science", path: "/data-science" },
+    { title: "Data Analysis", path: "/data-analysis" },
+    { title: "Data Visualization", path: "/data-visualization" },
+    { title: "Deep Learning", path: "/deep-learning" },
+    { title: "Natural Language Processing", path: "/nlp" },
+    { title: "Computer Vision", path: "/computer-vision" },
+    { title: "Artificial Intelligence", path: "/ai" }
+  ];
 
   return (
     <div className="min-h-screen">
@@ -63,13 +90,68 @@ function Home() {
         </div>
       </div>
 
-      {/* Rest of your content */}
-      <div className="py-12 bg-gray-100">
+      {/* Web Development Section */}
+      <div className="pt-32 bg-white">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Popular Courses</h2>
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl font-bold">Web Development</h2>
+            <button className="rounded-full border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-50">
+              View All
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {webDevCourses.map((course, index) => (
+              <div 
+                key={index}
+                onClick={() => navigate(course.path)}
+                className="bg-[#4B89DC] hover:bg-blue-600 text-white rounded-lg p-6 cursor-pointer transition duration-300 flex justify-between items-center"
+              >
+                <span className="text-2xl font-medium">{course.title}</span>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* AI ML & Data Science Section */}
+      <div className="py-12 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl font-bold">AI ML & Data Science</h2>
+            <button className="rounded-full border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-50">
+              View All
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {aiMlCourses.map((course, index) => (
+              <div 
+                key={index}
+                onClick={() => navigate(course.path)}
+                className="bg-[#A98AD0] hover:bg-purple-600 text-white rounded-lg p-6 cursor-pointer transition duration-300 flex justify-between items-center"
+              >
+                <span className="text-2xl font-medium">{course.title}</span>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Popular Programming Languages section */}
+      <div className="popular-languages">
+        <div className="carousel-container">
+          <h2>Popular Courses</h2>
           <Carousel />
         </div>
       </div>
+
+      {/* Add Explore Cards Section */}
+      <ExploreCards />
     </div>
   );
 }

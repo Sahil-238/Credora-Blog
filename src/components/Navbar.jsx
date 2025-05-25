@@ -47,7 +47,7 @@ const Navbar = () => {
   const handleDropdown = (index) => setActiveDropdown(activeDropdown === index ? null : index);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100' : 'bg-transparent'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
@@ -64,7 +64,7 @@ const Navbar = () => {
                 ref={el => dropdownRefs.current[index] = el}
               >
                 <button
-                  className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-white/10'}`}
+                  className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-white `}
                   onClick={() => item.hasDropdown && handleDropdown(index)}
                   aria-haspopup={item.hasDropdown}
                   aria-expanded={activeDropdown === index}
