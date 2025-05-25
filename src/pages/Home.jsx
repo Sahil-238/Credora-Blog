@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import backgroundVideo from '../video/83274-581386222.mp4';
+import Cards from '../components/Cards';
 
 function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -64,10 +65,11 @@ function Home() {
       </div>
 
       {/* Rest of your content */}
-      <div className="py-12 bg-gray-100">
+      <div className="py-12 ">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Popular Courses</h2>
           <Carousel />
+          <Cards/>
         </div>
       </div>
     </div>
