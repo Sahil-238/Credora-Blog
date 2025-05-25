@@ -73,6 +73,27 @@ function Carousel() {
       logo: require('../images/ruby.png'),
       users: '3M+ developers',
       trend: 'Popular for web applications'
+    },
+    {
+      id: 6,
+      name: 'SQL',
+      logo: require('../images/sql.png'),
+      users: '7M+ developers',
+      trend: 'Essential for database management'
+    },
+    {
+      id: 7,
+      name: 'Dart',
+      logo: require('../images/dart.png'),
+      users: '2M+ developers',
+      trend: 'Growing rapidly with Flutter framework'
+    },
+    {
+      id: 8,
+      name: 'R',
+      logo: require('../images/r.png'),
+      users: '2.5M+ developers',
+      trend: 'Popular for data analysis and statistics'
     }
   ];
 
@@ -122,7 +143,7 @@ function Carousel() {
           {languages.map((lang) => (
             <div 
               key={lang.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
+              className="bg-gradient-card text-white rounded-lg shadow-lg hover:bg-gradient-card-hover transform hover:-translate-y-1 transition-all duration-300"
             >
               <div className="p-6 space-y-4">
                 <div className="flex items-center justify-center h-24">

@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #0c231c;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -76,6 +76,7 @@
   color: white;
 }
 
+/* Only keep Swiper-specific styles that can't be handled by Tailwind */
 .swiper {
   padding: 2rem;
 }
@@ -93,7 +94,7 @@
 .back-button {
   position: absolute;
   top: 1rem;
-  right: 1rem;
+  left: 1rem;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -114,25 +115,29 @@
   font-size: 1.25rem;
 }
 
-/* Main background gradient */
+/* Main background */
 .min-h-screen {
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+  background: #ffffff;
+  color: #000000;
 }
 
-/* Navigation bar gradient */
+/* Navigation bar */
 .bg-white.shadow-lg {
-  background: linear-gradient(to right, #ffffff, #f8f9fa);
+  background: #ffffff;
+  color: #000000;
 }
 
-/* Card gradients */
+/* Card styles */
 .bg-white.p-6.rounded-lg.shadow-md {
-  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  background: #ffffff;
+  color: #000000;
   transition: transform 0.3s ease;
 }
 
 .bg-white.p-6.rounded-lg.shadow-md:hover {
   transform: translateY(-5px);
-  background: linear-gradient(145deg, #f8f9fa, #ffffff);
+  background: #ffffff;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Contact section gradient */
@@ -161,24 +166,27 @@ input:focus {
 
 /* Sidebar menu gradient */
 .fixed.left-0.top-16.h-full {
-  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  background: #ffffff;
 }
 
-/* Programming language cards gradient */
+/* Programming language cards */
 .bg-white.p-4.rounded-lg.shadow-md {
-  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  background: #ffffff;
+  color: #000000;
   transition: all 0.3s ease;
 }
 
 .bg-white.p-4.rounded-lg.shadow-md:hover {
   transform: translateY(-5px);
-  background: linear-gradient(145deg, #f8f9fa, #ffffff);
+  background: #ffffff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Form input gradients */
+/* Form inputs */
 input, textarea {
-  background: linear-gradient(to right, #3b82f6 0%, #2563eb 100%);
+  background: #ffffff;
+  color: #000000;
+  border-color: #e5e7eb;
 }
 
 /* About section divider gradient */
@@ -191,17 +199,30 @@ input, textarea {
   background: linear-gradient(145deg, #eff6ff, #dbeafe);
 }
 
-/* Additional gradient utilities */
+/* Additional utilities */
 .gradient-primary {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: #ffffff;
 }
 
 .gradient-secondary {
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+  background: #ffffff;
 }
 
 .gradient-accent {
-  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  background: #ffffff;
+}
+
+/* Keep text colors readable on white background */
+.text-gray-600 {
+  color: #4B5563;
+}
+
+.text-gray-700 {
+  color: #374151;
+}
+
+.text-gray-800 {
+  color: #1F2937;
 }
 
 /* Responsive adjustments */

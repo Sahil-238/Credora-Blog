@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ChevronDown, Search, User, Bell } from 'lucide-react';
 import { useUser, UserButton, SignInButton, SignUpButton } from "@clerk/clerk-react";
+import { Link, useLocation } from "react-router-dom";
 import { assets } from '../assets/assets';
 
 const Navbar = () => {
@@ -9,20 +10,20 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const dropdownRefs = useRef([]);
   const { isSignedIn } = useUser();
-
+  const location = useLocation();
   const navItems = [
-    { name: 'Home', href: '#', hasDropdown: false },
+    { name: 'Home', href: '/', hasDropdown: false },
     {
-      name: 'Courses', href: '#', hasDropdown: true, dropdownItems: [
-        { name: 'Web Development', href: '#' },
-        { name: 'Data Science', href: '#' },
-        { name: 'Mobile Development', href: '#' },
-        { name: 'UI/UX Design', href: '#' }
+      name: 'Courses', href: '/courses', hasDropdown: true, dropdownItems: [
+        { name: 'Web Development', href: '/courses/web-development' },
+        { name: 'Data Science', href: '/courses/data-science' },
+        { name: 'Mobile Development', href: '/courses/mobile-development' },
+        { name: 'UI/UX Design', href: '/courses/ui-ux-design' }
       ]
     },
-    { name: 'About', href: '#', hasDropdown: false },
-    { name: 'Blog', href: '#', hasDropdown: false },
-    { name: 'Contact', href: '#', hasDropdown: false }
+    { name: 'About', href: '/about', hasDropdown: false },
+    { name: 'Blog', href: '/blog', hasDropdown: false },
+    { name: 'Contact', href: '/contact', hasDropdown: false }
   ];
 
   // Scroll effect
@@ -47,13 +48,13 @@ const Navbar = () => {
   const handleDropdown = (index) => setActiveDropdown(activeDropdown === index ? null : index);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100' : 'bg-transparent'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <a href="#" className="flex-shrink-0">
+          <Link to="/" className="flex-shrink-0">
             <img src={assets.logo_dark} alt="EduNest" className="h-8 lg:h-10 w-auto" />
-          </a>
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center space-x-1">
@@ -63,25 +64,40 @@ const Navbar = () => {
                 className="relative"
                 ref={el => dropdownRefs.current[index] = el}
               >
-                <button
-                  className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-white/10'}`}
-                  onClick={() => item.hasDropdown && handleDropdown(index)}
-                  aria-haspopup={item.hasDropdown}
-                  aria-expanded={activeDropdown === index}
-                >
-                  {item.name}
-                  {item.hasDropdown && (
+                {item.hasDropdown ? (
+                  <button
+                    className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-white/10'
+                    }`}
+                    onClick={() => handleDropdown(index)}
+                    aria-haspopup={true}
+                    aria-expanded={activeDropdown === index}
+                  >
+                    {item.name}
                     <ChevronDown className={`ml-1 h-4 w-4 transform transition-transform ${activeDropdown === index ? 'rotate-180' : ''}`} />
-                  )}
-                </button>
+                  </button>
+                ) : (                  <Link
+                    to={item.href}
+                    className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-transparent'
+                    } ${location.pathname === item.href ? 'bg-transparent text-blue-600' : ''}`}
+                  >
+                    {item.name}
+                  </Link>
+                )}
 
                 {/* Dropdown */}
                 {item.hasDropdown && (
                   <div className={`absolute z-30 top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 transition-all duration-200 ${activeDropdown === index ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
                     {item.dropdownItems.map((dropItem, i) => (
-                      <a key={i} href={dropItem.href} className="block px-4 py-3 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+                      <Link
+                        key={i}
+                        to={dropItem.href}
+                        className="block px-4 py-3 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                        onClick={() => setActiveDropdown(null)}
+                      >
                         {dropItem.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -127,13 +143,24 @@ const Navbar = () => {
           <div className="bg-white rounded-xl mt-4 shadow-xl border border-gray-100 p-4 space-y-2">
             {navItems.map((item, index) => (
               <div key={index}>
-                <a href={item.href} className="block px-2 py-2 text-gray-700 font-medium hover:text-blue-600 hover:bg-blue-50">
+                <Link
+                  to={item.href}
+                  className={`block px-2 py-2 text-gray-700 font-medium hover:text-blue-600 hover:bg-blue-50 ${
+                    location.pathname === item.href ? 'bg-blue-50 text-blue-600' : ''
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
                   {item.name}
-                </a>
+                </Link>
                 {item.hasDropdown && item.dropdownItems.map((drop, i) => (
-                  <a key={i} href={drop.href} className="block px-6 py-1 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50">
+                  <Link
+                    key={i}
+                    to={drop.href}
+                    className="block px-6 py-1 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
                     {drop.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
             ))}
