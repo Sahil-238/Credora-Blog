@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import Footer from './Footer';
 function Introduction() {
   const navigate = useNavigate();
   
@@ -77,7 +77,9 @@ console.log(greet("Learner"));`}
         </div>
       </div>
     </div>
+    
   );
 }
+<Footer/>
 
 export default Introduction;
