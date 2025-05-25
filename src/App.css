@@ -36,3 +36,177 @@
     transform: rotate(360deg);
   }
 }
+
+/* Video Background */
+.video-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Carousel Styles */
+.carousel-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.carousel-slide {
+  position: relative;
+}
+
+/* Override slick-slider default styles */
+.slick-prev, .slick-next {
+  z-index: 1;
+}
+
+.slick-prev {
+  left: 25px;
+}
+
+.slick-next {
+  right: 25px;
+}
+
+.slick-dots {
+  bottom: 25px;
+}
+
+.slick-dots li button:before {
+  color: white;
+}
+
+.swiper {
+  padding: 2rem;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #2563eb;
+}
+
+.swiper-pagination-bullet-active {
+  background: #2563eb;
+}
+
+/* Back Button Styles */
+.back-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  color: #4B5563;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+
+.back-button:hover {
+  color: #1F2937;
+}
+
+.back-icon {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+/* Main background gradient */
+.min-h-screen {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+}
+
+/* Navigation bar gradient */
+.bg-white.shadow-lg {
+  background: linear-gradient(to right, #ffffff, #f8f9fa);
+}
+
+/* Card gradients */
+.bg-white.p-6.rounded-lg.shadow-md {
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  transition: transform 0.3s ease;
+}
+
+.bg-white.p-6.rounded-lg.shadow-md:hover {
+  transform: translateY(-5px);
+  background: linear-gradient(145deg, #f8f9fa, #ffffff);
+}
+
+/* Contact section gradient */
+.bg-blue-600 {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+/* Search bar gradient focus */
+input:focus {
+  background: linear-gradient(to right, #ffffff, #f0f9ff);
+}
+
+/* Button gradients */
+.bg-blue-600 {
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+}
+
+.hover\:bg-blue-700:hover {
+  background: linear-gradient(to right, #2563eb, #1d4ed8);
+}
+
+/* Stats cards gradient */
+.bg-blue-50 {
+  background: linear-gradient(145deg, #eff6ff, #dbeafe);
+}
+
+/* Sidebar menu gradient */
+.fixed.left-0.top-16.h-full {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+}
+
+/* Programming language cards gradient */
+.bg-white.p-4.rounded-lg.shadow-md {
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  transition: all 0.3s ease;
+}
+
+.bg-white.p-4.rounded-lg.shadow-md:hover {
+  transform: translateY(-5px);
+  background: linear-gradient(145deg, #f8f9fa, #ffffff);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Form input gradients */
+input, textarea {
+  background: linear-gradient(to right, #3b82f6 0%, #2563eb 100%);
+}
+
+/* About section divider gradient */
+.w-24.h-1.bg-blue-600 {
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+}
+
+/* Hover effects with gradients */
+.hover\:bg-blue-50:hover {
+  background: linear-gradient(145deg, #eff6ff, #dbeafe);
+}
+
+/* Additional gradient utilities */
+.gradient-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.gradient-secondary {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .video-container {
+    height: 70vh;
+  }
+}
