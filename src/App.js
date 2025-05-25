@@ -1,11 +1,36 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Introduction from './pages/Introduction';
+import About from './pages/About';
+import WebDevelopment from './pages/WebDevelopment';
+import DataScience from './pages/DataScience';
+import MobileDevelopment from './pages/MobileDevelopment';
+import UIUXDesign from './pages/UIUXDesign';
+import Navbar from './components/Navbar';
 import './App.css';
+import Footer from './components/Footer';
+
 
 function App() {
   return (
-    <div className="text-center p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold text-blue-600">Welcome to Tailwind + React!</h1>
-    </div>
+    <Router>
+      <Navbar/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/introduction" element={<Introduction />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/courses/web-development" element={<WebDevelopment />} />
+        <Route path="/courses/data-science" element={<DataScience />} />
+        <Route path="/courses/mobile-development" element={<MobileDevelopment />} />
+        <Route path="/courses/ui-ux-design" element={<UIUXDesign />} />
+      </Routes>
+      <Footer/>
+    </Router>
   );
 }
 
