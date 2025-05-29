@@ -34,12 +34,12 @@ function Home() {
 
   const handleLanguageClick = (language) => {
     if (language === "JavaScript") {
-      navigate('/introduction');
+      navigate('/javascript-course');
     }
   };
 
   const webDevCourses = [
-    { title: "JavaScript", path: "/javascript" },
+    { title: "JavaScript", path: "/javascript-course" },
     { title: "HTML", path: "/html" },
     { title: "CSS", path: "/css" },
     { title: "ReactJS", path: "/react" },

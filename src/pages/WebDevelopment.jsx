@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { assets } from '../assets/assets';
+import { useNavigate } from 'react-router-dom';
 
 const WebDevelopment = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   const categories = [
@@ -13,6 +15,21 @@ const WebDevelopment = () => {
   ];
 
   const courses = [
+    {
+      id: 0,
+      title: 'Complete JavaScript Course',
+      description: 'Master JavaScript from fundamentals to advanced concepts including ES6+, DOM manipulation, and asynchronous programming',
+      image: assets.course_1_thumbnail,
+      instructor: 'John Doe',
+      instructorImage: assets.profile_img_1,
+      duration: '40 hours',
+      level: 'Beginner to Advanced',
+      rating: 4.9,
+      students: 18650,
+      category: 'frontend',
+      price: 'Free',
+      path: '/javascript-course'
+    },
     {
       id: 1,
       title: 'Complete React.js Developer Course',
@@ -70,6 +87,10 @@ const WebDevelopment = () => {
       price: '$69.99'
     }
   ];
+
+  const handleEnrollClick = (coursePath) => {
+    navigate(coursePath);
+  };
 
   const filteredCourses = selectedCategory === 'all' 
     ? courses 
@@ -156,7 +177,10 @@ const WebDevelopment = () => {
                     {course.duration}
                   </div>
                 </div>
-                <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                <button 
+                  onClick={() => handleEnrollClick(course.path)}
+                  className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                >
                   Enroll Now
                 </button>
               </div>
