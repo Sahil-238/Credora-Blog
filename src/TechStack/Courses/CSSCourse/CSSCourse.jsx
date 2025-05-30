@@ -1,31 +1,23 @@
 import React, { useEffect } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiBook, FiCode, FiCheckCircle, FiPlay, FiAward, FiBox, FiCpu, FiDatabase, FiGlobe, FiLayers, FiServer, FiTool } from 'react-icons/fi';
+import { FiBook, FiLayout, FiTool } from 'react-icons/fi';
 import courseStructure from './courseConfig';
 
 // Map icons to categories
 const categoryIcons = {
   basics: <FiBook />,
-  operators: <FiCode />,
-  dataTypes: <FiDatabase />,
-  dataStructures: <FiLayers />,
-  controlFlow: <FiCpu />,
-  functions: <FiBox />,
-  objects: <FiBox />,
-  async: <FiServer />,
-  dom: <FiGlobe />,
-  advanced: <FiTool />,
-  bestPractices: <FiCheckCircle />
+  layout: <FiLayout />,
+  advanced: <FiTool />
 };
 
-const JavaScriptCourse = () => {
+const CSSCourse = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Effect to handle initial navigation and scroll position
+  // Effect to handle initial navigation
   useEffect(() => {
-    if (location.pathname === '/javascript-course') {
+    if (location.pathname === '/css-course') {
       // Get the first topic from the course structure
       const firstCategory = Object.values(courseStructure)[0];
       const firstTopic = firstCategory.sections[0];
@@ -45,12 +37,18 @@ const JavaScriptCourse = () => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  // Helper function to check if a route is active
+  const isRouteActive = (sectionId) => {
+    const currentPath = location.pathname.split('/').pop();
+    return currentPath === sectionId;
+  };
+
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar Navigation */}
       <div className="fixed top-0 left-0 w-64 h-screen bg-white shadow-lg overflow-y-auto">
         <div className="p-4">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">JavaScript Course</h2>
+          <h2 className="text-xl font-bold text-gray-800 mb-4">CSS Course</h2>
           <nav>
             {Object.entries(courseStructure).map(([key, category]) => (
               <div key={key} className="mb-6">
@@ -64,7 +62,7 @@ const JavaScriptCourse = () => {
                       <Link
                         to={section.id}
                         className={`block py-1 px-2 rounded text-sm ${
-                          location.pathname.includes(section.id)
+                          isRouteActive(section.id)
                             ? 'bg-blue-50 text-blue-600'
                             : 'text-gray-600 hover:bg-gray-50'
                         }`}
@@ -88,4 +86,4 @@ const JavaScriptCourse = () => {
   );
 };
 
-export default JavaScriptCourse; 
+export default CSSCourse; 

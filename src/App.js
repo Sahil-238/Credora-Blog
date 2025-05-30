@@ -13,7 +13,9 @@ import DataScience from './pages/DataScience';
 import MobileDevelopment from './pages/MobileDevelopment';
 import UIUXDesign from './pages/UIUXDesign';
 import JavaScriptCourse from './TechStack/Courses/JavaScriptCourse/JavaScriptCourse';
-import courseStructure from './TechStack/Courses/JavaScriptCourse/courseConfig';
+import CSSCourse from './TechStack/Courses/CSSCourse/CSSCourse';
+import jsConfig from './TechStack/Courses/JavaScriptCourse/courseConfig';
+import cssConfig from './TechStack/Courses/CSSCourse/courseConfig';
 
 // JavaScript Course Chapters - Basics
 import JSIntroduction from './TechStack/Courses/JavaScriptCourse/chapters/basics/Introduction';
@@ -86,15 +88,41 @@ import Navbar from './components/Navbar';
 import './App.css';
 import Footer from './components/Footer';
 
+// Create a cache for lazy loaded components
+const componentCache = {};
+
+// Helper function to convert kebab-case to PascalCase
+const toPascalCase = (str) => {
+  return str
+    .split('-')
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+};
+
+// Helper function to check if string is already in PascalCase
+const isPascalCase = (str) => {
+  return /^[A-Z][a-zA-Z0-9]*$/.test(str);
+};
+
 // Import all components dynamically
-const importComponent = (category, section) => {
-  let componentName = section.title.replace(/[^a-zA-Z0-9]/g, '');
-  // Handle reserved words
-  const reservedWords = ['typeof', 'delete', 'void', 'new', 'class', 'function', 'return'];
-  if (reservedWords.includes(componentName.toLowerCase())) {
-    componentName += 'Operator';
+const importComponent = (course, category, section) => {
+  const path = `${course}/${category}/${section.id}`;
+  const componentName = isPascalCase(section.id) ? section.id : toPascalCase(section.id);
+  
+  if (!componentCache[path]) {
+    componentCache[path] = React.lazy(() => 
+      import(`./TechStack/Courses/${course}/chapters/${category}/${componentName}`)
+        .then(module => ({
+          default: module.default || module
+        }))
+        .catch(error => {
+          console.error(`Failed to load component: ${path}`, error);
+          throw error;
+        })
+    );
   }
-  return React.lazy(() => import(`./TechStack/Courses/JavaScriptCourse/chapters/${category}/${componentName}`));
+  
+  return componentCache[path];
 };
 
 function App() {
@@ -117,18 +145,41 @@ function App() {
         
         {/* JavaScript Course Routes */}
         <Route path="/javascript-course" element={<JavaScriptCourse />}>
-          {Object.entries(courseStructure).map(([category, { sections }]) =>
-            sections.map(section => (
-              <Route
-                key={section.id}
-                path={section.id}
-                element={
-                  <React.Suspense fallback={<div>Loading...</div>}>
-                    {React.createElement(importComponent(category, section))}
-                  </React.Suspense>
-                }
-              />
-            ))
+          {Object.entries(jsConfig).map(([category, { sections }]) =>
+            sections.map(section => {
+              const LazyComponent = importComponent('JavaScriptCourse', category, section);
+              return (
+                <Route
+                  key={section.id}
+                  path={section.id}
+                  element={
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <LazyComponent />
+                    </React.Suspense>
+                  }
+                />
+              );
+            })
+          )}
+        </Route>
+
+        {/* CSS Course Routes */}
+        <Route path="/css-course" element={<CSSCourse />}>
+          {Object.entries(cssConfig).map(([category, { sections }]) =>
+            sections.map(section => {
+              const LazyComponent = importComponent('CSSCourse', category, section);
+              return (
+                <Route
+                  key={section.id}
+                  path={section.id}
+                  element={
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <LazyComponent />
+                    </React.Suspense>
+                  }
+                />
+              );
+            })
           )}
         </Route>
       </Routes>

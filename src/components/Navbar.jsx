@@ -15,6 +15,8 @@ const Navbar = () => {
     { name: 'Home', href: '/', hasDropdown: false },
     {
       name: 'Courses', href: '/courses', hasDropdown: true, dropdownItems: [
+        { name: 'JavaScript', href: '/javascript-course' },
+        { name: 'CSS', href: '/css-course' },
         { name: 'Web Development', href: '/courses/web-development' },
         { name: 'Data Science', href: '/courses/data-science' },
         { name: 'Mobile Development', href: '/courses/mobile-development' },
