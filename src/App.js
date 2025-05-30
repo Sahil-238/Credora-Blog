@@ -15,6 +15,11 @@ import UIUXDesign from './pages/UIUXDesign';
 import JavaScriptCourse from './TechStack/Courses/JavaScriptCourse/JavaScriptCourse';
 import courseStructure from './TechStack/Courses/JavaScriptCourse/courseConfig';
 
+// HTML Course Components
+import HTMLCourse from './TechStack/Courses/HTMLCourse/HTMLCourse';
+import Introduction from './TechStack/Courses/HTMLCourse/chapters/basics/Introduction';
+import Editors from './TechStack/Courses/HTMLCourse/chapters/basics/Editors';
+
 // JavaScript Course Chapters - Basics
 import JSIntroduction from './TechStack/Courses/JavaScriptCourse/chapters/basics/Introduction';
 import WhereTo from './TechStack/Courses/JavaScriptCourse/chapters/basics/WhereTo';
@@ -114,6 +119,12 @@ function App() {
         <Route path="/courses/data-science" element={<DataScience />} />
         <Route path="/courses/mobile-development" element={<MobileDevelopment />} />
         <Route path="/courses/ui-ux-design" element={<UIUXDesign />} />
+        
+        {/* HTML Course Routes */}
+        <Route path="/html" element={<HTMLCourse />}>
+          <Route path="introduction" element={<Introduction />} />
+          <Route path="editors" element={<Editors />} />
+        </Route>
         
         {/* JavaScript Course Routes */}
         <Route path="/javascript-course" element={<JavaScriptCourse />}>
