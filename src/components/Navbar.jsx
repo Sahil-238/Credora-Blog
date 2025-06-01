@@ -17,6 +17,13 @@ const Navbar = () => {
       name: 'Courses', href: '/courses', hasDropdown: true, dropdownItems: [
         { name: 'JavaScript', href: '/javascript-course' },
         { name: 'CSS', href: '/css-course' },
+        { name: 'React', href: '/react-course' },
+        { name: 'Node.js', href: '/nodejs-course' },
+        { name: 'Java', href: '/java-course' },
+        { name: 'Python', href: '/python-course' },
+        { name: 'PHP', href: '/php-course' },
+        { name: 'SQL', href: '/sql-course' },
+        { name: 'Bootstrap', href: '/bootstrap-course' },
         { name: 'Web Development', href: '/courses/web-development' },
         { name: 'Data Science', href: '/courses/data-science' },
         { name: 'Mobile Development', href: '/courses/mobile-development' },

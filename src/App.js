@@ -14,8 +14,22 @@ import MobileDevelopment from './pages/MobileDevelopment';
 import UIUXDesign from './pages/UIUXDesign';
 import JavaScriptCourse from './TechStack/Courses/JavaScriptCourse/JavaScriptCourse';
 import CSSCourse from './TechStack/Courses/CSSCourse/CSSCourse';
+import ReactCourse from './TechStack/Courses/ReactCourse/ReactCourse';
+import NodeJSCourse from './TechStack/Courses/NodeJSCourse/NodeJSCourse';
+import JavaCourse from './TechStack/Courses/JavaCourse/JavaCourse';
+import SQLCourse from './TechStack/Courses/SQLCourse/SQLCourse';
 import jsConfig from './TechStack/Courses/JavaScriptCourse/courseConfig';
 import cssConfig from './TechStack/Courses/CSSCourse/courseConfig';
+import reactConfig from './TechStack/Courses/ReactCourse/courseConfig';
+import nodeConfig from './TechStack/Courses/NodeJSCourse/courseConfig';
+import javaConfig from './TechStack/Courses/JavaCourse/courseConfig';
+import sqlConfig from './TechStack/Courses/SQLCourse/courseConfig';
+import PythonCourse from './TechStack/Courses/PythonCourse/PythonCourse';
+import pythonConfig from './TechStack/Courses/PythonCourse/courseConfig';
+import PHPCourse from './TechStack/Courses/PHPCourse/PHPCourse';
+import phpConfig from './TechStack/Courses/PHPCourse/courseConfig';
+import BootstrapCourse from './TechStack/Courses/BootstrapCourse/BootstrapCourse';
+import bootstrapConfig from './TechStack/Courses/BootstrapCourse/courseConfig';
 
 // JavaScript Course Chapters - Basics
 import JSIntroduction from './TechStack/Courses/JavaScriptCourse/chapters/basics/Introduction';
@@ -107,7 +121,7 @@ const isPascalCase = (str) => {
 // Import all components dynamically
 const importComponent = (course, category, section) => {
   const path = `${course}/${category}/${section.id}`;
-  const componentName = isPascalCase(section.id) ? section.id : toPascalCase(section.id);
+  const componentName = section.id;
   
   if (!componentCache[path]) {
     componentCache[path] = React.lazy(() => 
@@ -168,6 +182,146 @@ function App() {
           {Object.entries(cssConfig).map(([category, { sections }]) =>
             sections.map(section => {
               const LazyComponent = importComponent('CSSCourse', category, section);
+              return (
+                <Route
+                  key={section.id}
+                  path={section.id}
+                  element={
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <LazyComponent />
+                    </React.Suspense>
+                  }
+                />
+              );
+            })
+          )}
+        </Route>
+
+        {/* React Course Routes */}
+        <Route path="/react-course" element={<ReactCourse />}>
+          {Object.entries(reactConfig).map(([category, { sections }]) =>
+            sections.map(section => {
+              const LazyComponent = importComponent('ReactCourse', category, section);
+              return (
+                <Route
+                  key={section.id}
+                  path={section.id}
+                  element={
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <LazyComponent />
+                    </React.Suspense>
+                  }
+                />
+              );
+            })
+          )}
+        </Route>
+
+        {/* Node.js Course Routes */}
+        <Route path="/nodejs-course" element={<NodeJSCourse />}>
+          {Object.entries(nodeConfig).map(([category, { sections }]) =>
+            sections.map(section => {
+              const LazyComponent = importComponent('NodeJSCourse', category, section);
+              return (
+                <Route
+                  key={section.id}
+                  path={section.id}
+                  element={
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <LazyComponent />
+                    </React.Suspense>
+                  }
+                />
+              );
+            })
+          )}
+        </Route>
+
+        {/* Java Course Routes */}
+        <Route path="/java-course" element={<JavaCourse />}>
+          {Object.entries(javaConfig).map(([category, { sections }]) =>
+            sections.map(section => {
+              const LazyComponent = importComponent('JavaCourse', category, section);
+              return (
+                <Route
+                  key={section.id}
+                  path={section.id}
+                  element={
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <LazyComponent />
+                    </React.Suspense>
+                  }
+                />
+              );
+            })
+          )}
+        </Route>
+
+        {/* SQL Course Routes */}
+        <Route path="/sql-course" element={<SQLCourse />}>
+          {Object.entries(sqlConfig).map(([category, { sections }]) =>
+            sections.map(section => {
+              const LazyComponent = importComponent('SQLCourse', category, section);
+              return (
+                <Route
+                  key={section.id}
+                  path={section.id}
+                  element={
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <LazyComponent />
+                    </React.Suspense>
+                  }
+                />
+              );
+            })
+          )}
+        </Route>
+
+        {/* Python Course Routes */}
+        <Route path="/python-course" element={<PythonCourse />}>
+          {Object.entries(pythonConfig).map(([category, { sections }]) =>
+            sections.map(section => {
+              const LazyComponent = importComponent('PythonCourse', category, section);
+              return (
+                <Route
+                  key={section.id}
+                  path={section.id}
+                  element={
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <LazyComponent />
+                    </React.Suspense>
+                  }
+                />
+              );
+            })
+          )}
+        </Route>
+
+        {/* PHP Course Routes */}
+        <Route path="/php-course" element={<PHPCourse />}>
+          {Object.entries(phpConfig).map(([category, { sections }]) =>
+            sections.map(section => {
+              const LazyComponent = importComponent('PHPCourse', category, section);
+              return (
+                <Route
+                  key={section.id}
+                  path={section.id}
+                  element={
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                      <LazyComponent />
+                    </React.Suspense>
+                  }
+                />
+              );
+            })
+          )}
+        </Route>
+
+        {/* Bootstrap Course Routes */}
+        <Route path="/bootstrap-course" element={<BootstrapCourse />}>
+          {Object.entries(bootstrapConfig).map(([category, { sections }]) =>
+            sections.map(section => {
+              const LazyComponent = importComponent('BootstrapCourse', category, section);
               return (
                 <Route
                   key={section.id}

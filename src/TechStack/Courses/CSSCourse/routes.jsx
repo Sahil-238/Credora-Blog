@@ -45,7 +45,7 @@ import GridContainer from './chapters/grid/GridContainer';
 import GridItem from './chapters/grid/GridItem';
 
 // Responsive
-import RwdIntro from './chapters/responsive/RwdIntro';
+import RwdIntro from './chapters/responsive/RWDIntro';
 import RWDViewport from './chapters/responsive/RWDViewport';
 import RWDGridView from './chapters/responsive/RWDGridView';
 import RWDMediaQueries from './chapters/responsive/RWDMediaQueries';

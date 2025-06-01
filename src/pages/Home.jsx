@@ -41,9 +41,10 @@ function Home() {
   const webDevCourses = [
     { title: "JavaScript", path: "/javascript-course" },
     { title: "HTML", path: "/html" },
-    { title: "CSS", path: "/css" },
-    { title: "ReactJS", path: "/react" },
-    { title: "Node.js", path: "/nodejs" },
+    { title: "CSS", path: "/css-course" },
+    { title: "ReactJS", path: "/react-course" },
+    { title: "Node.js", path: "/nodejs-course" },
+    { title: "Java", path: "/java-course" },
     { title: "Django", path: "/django" },
     { title: "Frontend Development", path: "/frontend" },
     { title: "Backend Development", path: "/backend" }
