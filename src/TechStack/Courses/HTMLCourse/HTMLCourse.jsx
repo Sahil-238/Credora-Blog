@@ -73,63 +73,35 @@ const HTMLCourse = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const handleNavigation = (sectionId) => {
-    navigate(`/html-course/${sectionId}`);
-    setIsSidebarOpen(false);
+  const handleSectionClick = (sectionId) => {
+    navigate(sectionId);
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      {/* Mobile Menu Button */}
-      <button 
-        className="menu-button fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg md:hidden"
-        onClick={toggleSidebar}
-      >
-        {isSidebarOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-      </button>
-
-      {/* Sidebar Navigation */}
-      <div className={`sidebar fixed md:static w-64 bg-white shadow-lg h-full z-40 transition-transform duration-300 ease-in-out ${
-        isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-      }`}>
-        <div className="p-4">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">HTML Course</h2>
-          <nav>
-            {Object.entries(courseStructure).map(([key, category]) => (
-              <div key={key} className="mb-6">
-                <div className="flex items-center space-x-2 text-gray-600 mb-2">
-                  {categoryIcons[key]}
-                  <span className="font-semibold">{category.title}</span>
-                </div>
-                <ul className="space-y-1 pl-6">
-                  {category.sections.map((section) => (
-                    <li key={section.id}>
-                      <button
-                        onClick={() => handleNavigation(section.id)}
-                        className={`w-full text-left block py-1 px-2 rounded text-sm ${
-                          location.pathname.includes(section.id)
-                            ? 'bg-blue-50 text-blue-600'
-                            : 'text-gray-600 hover:bg-gray-50'
-                        }`}
-                      >
-                        {section.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </nav>
+    <div className="course-container">
+      <div className="course-sidebar">
+        <h2>HTML Course</h2>
+        <div className="course-sections">
+          {Object.entries(courseStructure).map(([category, { title, sections }]) => (
+            <div key={category} className="course-category">
+              <h3>{title}</h3>
+              <ul>
+                {sections.map((section) => (
+                  <li key={section.id}>
+                    <button
+                      onClick={() => handleSectionClick(section.id)}
+                      className="section-button"
+                    >
+                      {section.title}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
-
-      {/* Overlay for mobile */}
-      {isSidebarOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden" onClick={toggleSidebar} />
-      )}
-
-      {/* Main Content */}
-      <div className="flex-1 p-8 md:ml-64">
+      <div className="course-content">
         <Outlet />
       </div>
     </div>

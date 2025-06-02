@@ -40,7 +40,7 @@ function Home() {
 
   const webDevCourses = [
     { title: "JavaScript", path: "/javascript-course" },
-    { title: "HTML", path: "/html" },
+    { title: "HTML", path: "/html-course" },
     { title: "CSS", path: "/css-course" },
     { title: "ReactJS", path: "/react-course" },
     { title: "Node.js", path: "/nodejs-course" },

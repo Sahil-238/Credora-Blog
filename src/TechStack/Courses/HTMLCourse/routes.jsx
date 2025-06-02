@@ -14,8 +14,25 @@ import Paragraphs from './chapters/basics/Paragraphs';
 import Styles from './chapters/basics/Styles';
 import Formatting from './chapters/basics/Formatting';
 
+// Import text formatting components
+import Quotations from './chapters/basics/Quotation';
+import Comments from './chapters/basics/Comments';
+import Colors from './chapters/basics/Colors';
+import CSS from './chapters/basics/CSS';
+import Links from './chapters/basics/Links';
+import Images from './chapters/basics/Images';
+import Favicon from './chapters/basics/Favicon';
+import Tables from './chapters/basics/Tables';
+
+// Import lists components
+import Lists from './chapters/basics/Lists';
+import UnorderedLists from './chapters/basics/UnorderedLists';
+import OrderedLists from './chapters/basics/OrderedLists';
+import DescriptionLists from './chapters/basics/DescriptionLists';
+
 // Create a mapping of route IDs to components
 const routeComponents = {
+  // Basics
   'introduction': Introduction,
   'editors': Editors,
   'basic': Basic,
@@ -25,7 +42,22 @@ const routeComponents = {
   'paragraphs': Paragraphs,
   'styles': Styles,
   'formatting': Formatting,
-  // Add more components as they are created
+
+  // Text Formatting
+  'quotation': Quotations,
+  'comments': Comments,
+  'colors': Colors,
+  'css': CSS,
+  'links': Links,
+  'images': Images,
+  'favicon': Favicon,
+  'tables': Tables,
+
+  // Lists
+  'lists': Lists,
+  'unordered-lists': UnorderedLists,
+  'ordered-lists': OrderedLists,
+  'description-lists': DescriptionLists,
 };
 
 const HTMLCourseRoutes = () => {

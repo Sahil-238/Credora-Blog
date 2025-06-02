@@ -48,25 +48,69 @@
   margin-bottom: 1rem;
 }
 
-.info-box ul {
-  list-style-type: disc;
-  padding-left: 1.5rem;
+.attributes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.attribute-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.attribute-card:hover {
+  transform: translateY(-5px);
+}
+
+.attribute-card h3 {
+  color: #2d3748;
+  font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
-.info-box li {
-  margin-bottom: 0.5rem;
-  line-height: 1.6;
+.attribute-card p {
+  color: #4a5568;
+  margin-bottom: 1rem;
 }
 
-.benefits-grid {
+.global-attributes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.attribute-item {
+  background: #f7fafc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.attribute-item h3 {
+  color: #2d3748;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.attribute-item p {
+  color: #4a5568;
+  margin-bottom: 1rem;
+}
+
+.practices-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
   margin: 2rem 0;
 }
 
-.benefit-card {
+.practice-item {
   background: #fff;
   padding: 1.5rem;
   border-radius: 8px;
@@ -74,17 +118,17 @@
   transition: transform 0.2s ease;
 }
 
-.benefit-card:hover {
+.practice-item:hover {
   transform: translateY(-5px);
 }
 
-.benefit-card h3 {
+.practice-item h3 {
   color: #2d3748;
   font-size: 1.25rem;
   margin-bottom: 0.75rem;
 }
 
-.benefit-card p {
+.practice-item p {
   color: #4a5568;
   font-size: 1rem;
   line-height: 1.5;
@@ -92,12 +136,13 @@
 
 .navigation-buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 3rem;
   padding-top: 2rem;
   border-top: 1px solid #e2e8f0;
 }
 
+.prev-button,
 .next-button {
   padding: 0.75rem 1.5rem;
   background: #4299e1;
@@ -107,6 +152,7 @@
   transition: background-color 0.2s ease;
 }
 
+.prev-button:hover,
 .next-button:hover {
   background: #2b6cb0;
 }
@@ -116,7 +162,9 @@
     padding: 1rem;
   }
 
-  .benefits-grid {
+  .attributes-grid,
+  .global-attributes,
+  .practices-list {
     grid-template-columns: 1fr;
   }
 
@@ -130,5 +178,15 @@
 
   .lesson-section h2 {
     font-size: 1.75rem;
+  }
+
+  .navigation-buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .prev-button,
+  .next-button {
+    text-align: center;
   }
 } 

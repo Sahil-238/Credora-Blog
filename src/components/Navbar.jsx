@@ -7,6 +7,8 @@ import { assets } from '../assets/assets';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const dropdownRefs = useRef([]);
   const { isSignedIn } = useUser();
@@ -37,10 +39,27 @@ const Navbar = () => {
 
   // Scroll effect
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Update scrolled state
+      setIsScrolled(currentScrollY > 20);
+      
+      // Update visibility based on scroll direction
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down
+        setIsVisible(false);
+      } else {
+        // Scrolling up
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   // Close dropdown if clicked outside
   useEffect(() => {
@@ -57,12 +76,18 @@ const Navbar = () => {
   const handleDropdown = (index) => setActiveDropdown(activeDropdown === index ? null : index);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
+    } ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
-            <img src={assets.logo_dark} alt="EduNest" className="h-8 lg:h-10 w-auto" />
+            <img 
+              src={isScrolled ? assets.logo_dark : assets.logo} 
+              alt="EduNest" 
+              className="h-8 lg:h-10 w-auto" 
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -85,10 +110,11 @@ const Navbar = () => {
                     {item.name}
                     <ChevronDown className={`ml-1 h-4 w-4 transform transition-transform ${activeDropdown === index ? 'rotate-180' : ''}`} />
                   </button>
-                ) : (                  <Link
+                ) : (
+                  <Link
                     to={item.href}
                     className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                      isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-transparent'
+                      isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-white/10'
                     } ${location.pathname === item.href ? 'bg-transparent text-blue-600' : ''}`}
                   >
                     {item.name}
@@ -97,7 +123,7 @@ const Navbar = () => {
 
                 {/* Dropdown */}
                 {item.hasDropdown && (
-                  <div className={`absolute z-30 top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 transition-all duration-200 ${activeDropdown === index ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
+                  <div className={`absolute z-50 top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 transition-all duration-200 ${activeDropdown === index ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
                     {item.dropdownItems.map((dropItem, i) => (
                       <Link
                         key={i}
@@ -130,7 +156,11 @@ const Navbar = () => {
             ) : (
               <>
                 <SignInButton>
-                  <button className="text-sm px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg">Sign In</button>
+                  <button className={`text-sm px-3 py-2 rounded-lg transition-all duration-200 ${
+                    isScrolled 
+                      ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' 
+                      : 'text-white hover:text-blue-200 hover:bg-white/10'
+                  }`}>Sign In</button>
                 </SignInButton>
                 <SignUpButton>
                   <button className="text-sm px-3 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg">Sign Up</button>
