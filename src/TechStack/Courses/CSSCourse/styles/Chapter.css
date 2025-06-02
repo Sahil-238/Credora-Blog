@@ -1,0 +1,130 @@
+.chapter-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.chapter-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  border-bottom: 3px solid #3498db;
+  padding-bottom: 0.5rem;
+}
+
+.content-section {
+  margin-bottom: 3rem;
+}
+
+.content-section h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 2rem 0 1rem;
+}
+
+.content-section h3 {
+  font-size: 1.5rem;
+  color: #34495e;
+  margin: 1.5rem 0 1rem;
+}
+
+.content-section p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.content-section ul {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+.content-section li {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.code-example {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.code-example pre {
+  margin: 0;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #24292e;
+}
+
+.troubleshooting {
+  background-color: #fff8dc;
+  border-left: 4px solid #ffd700;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.troubleshooting h3 {
+  color: #b8860b;
+  margin-top: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chapter-container {
+    padding: 1rem;
+  }
+
+  .chapter-container h1 {
+    font-size: 2rem;
+  }
+
+  .content-section h2 {
+    font-size: 1.75rem;
+  }
+
+  .content-section h3 {
+    font-size: 1.25rem;
+  }
+
+  .code-example {
+    padding: 1rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .chapter-container {
+    color: #e1e1e1;
+    background-color: #1a1a1a;
+  }
+
+  .chapter-container h1,
+  .content-section h2,
+  .content-section h3 {
+    color: #fff;
+  }
+
+  .code-example {
+    background-color: #2d2d2d;
+  }
+
+  .code-example pre {
+    color: #e1e1e1;
+  }
+
+  .troubleshooting {
+    background-color: #2d2d2d;
+    border-left-color: #ffd700;
+  }
+
+  .troubleshooting h3 {
+    color: #ffd700;
+  }
+} 
