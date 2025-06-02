@@ -1,0 +1,9 @@
+{
+  "name": "sql-course-generator",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Generator script for SQL course chapters",
+  "dependencies": {
+    "sql-course-generator": "file:"
+  }
+} 

@@ -48,7 +48,7 @@ const JavaScriptCourse = () => {
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar Navigation */}
-      <div className="w-64 bg-white shadow-lg">
+      <div className="fixed top-0 left-0 w-64 h-screen bg-white shadow-lg overflow-y-auto">
         <div className="p-4">
           <h2 className="text-xl font-bold text-gray-800 mb-4">JavaScript Course</h2>
           <nav>
@@ -68,9 +68,6 @@ const JavaScriptCourse = () => {
                             ? 'bg-blue-50 text-blue-600'
                             : 'text-gray-600 hover:bg-gray-50'
                         }`}
-                        onClick={() => {
-                          window.scrollTo(0, 0);
-                        }}
                       >
                         {section.title}
                       </Link>
@@ -84,7 +81,7 @@ const JavaScriptCourse = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-8">
+      <div className="flex-1 ml-64 p-8">
         <Outlet />
       </div>
     </div>

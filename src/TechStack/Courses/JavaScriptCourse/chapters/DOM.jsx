@@ -1,9 +1,9 @@
-import TopicNavigation from '../../../../../components/TopicNavigation';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiSearch, FiEdit, FiRefreshCw, FiZap } from 'react-icons/fi';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import TopicNavigation from '../../../../components/TopicNavigation';
 
 const DOM = () => {
   const sections = [
@@ -199,9 +199,7 @@ const handleScroll = debounce(() => {
                 </p>
               </div>
             </div>
-          
-      
-    </motion.div>
+          </motion.div>
         ))}
       </div>
 

@@ -1,7 +1,7 @@
-import TopicNavigation from '../../../../../components/TopicNavigation';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiPlay, FiCode, FiBookOpen } from 'react-icons/fi';
+import TopicNavigation from '../../../../components/TopicNavigation';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -89,9 +89,7 @@ function greet() {
             <p className="text-gray-600 leading-relaxed whitespace-pre-line">
               {section.content}
             </p>
-          
-      
-    </motion.div>
+          </motion.div>
         ))}
       </div>
 
