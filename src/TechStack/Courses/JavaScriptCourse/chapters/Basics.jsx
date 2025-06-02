@@ -1,9 +1,9 @@
-import TopicNavigation from '../../../../../components/TopicNavigation';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FiCode, FiBox, FiCpu, FiGitBranch } from 'react-icons/fi';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import TopicNavigation from '../../../../components/TopicNavigation';
 
 const Basics = () => {
   const sections = [

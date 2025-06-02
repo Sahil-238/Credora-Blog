@@ -37,7 +37,7 @@ const courseStructure = {
       { id: 'string-templates', title: 'String Templates' },
       { id: 'numbers', title: 'Numbers' },
       { id: 'number-methods', title: 'Number Methods' },
-      { id: 'bigint', title: 'BigInt' },
+      { id: 'BigInt', title: 'BigInt' },
       { id: 'booleans', title: 'Booleans' }
     ]
   },
