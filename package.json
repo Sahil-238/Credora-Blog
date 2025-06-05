@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "@clerk/clerk-react": "^5.31.6",
+    "@craco/craco": "^7.1.0",
     "@heroicons/react": "^2.2.0",
+    "@monaco-editor/react": "^4.7.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -32,9 +34,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -57,6 +59,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
+    "babel-plugin-module-resolver": "^5.0.2",
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1"
   }

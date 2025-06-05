@@ -12,6 +12,9 @@ import WebDevelopment from './pages/WebDevelopment';
 import DataScience from './pages/DataScience';
 import MobileDevelopment from './pages/MobileDevelopment';
 import UIUXDesign from './pages/UIUXDesign';
+import DataScienceCourse from './TechStack/Courses/DataScienceCourse/DataScienceCourse';
+import ErrorBoundary from './components/ErrorBoundary';
+import LoadingFallback from './components/LoadingFallback';
 
 // Course imports
 import JavaScriptCourse from './TechStack/Courses/JavaScriptCourse/JavaScriptCourse';
@@ -23,6 +26,8 @@ import SQLCourse from './TechStack/Courses/SQLCourse/SQLCourse';
 import PythonCourse from './TechStack/Courses/PythonCourse/PythonCourse';
 import PHPCourse from './TechStack/Courses/PHPCourse/PHPCourse';
 import BootstrapCourse from './TechStack/Courses/BootstrapCourse/BootstrapCourse';
+import CCourse from './TechStack/Courses/CCourse/CCourse';
+import CPPCourse from './TechStack/Courses/CPPCourse/CPPCourse';
 
 // Course configurations
 import jsConfig from './TechStack/Courses/JavaScriptCourse/courseConfig';
@@ -34,6 +39,8 @@ import sqlConfig from './TechStack/Courses/SQLCourse/courseConfig';
 import pythonConfig from './TechStack/Courses/PythonCourse/courseConfig';
 import phpConfig from './TechStack/Courses/PHPCourse/courseConfig';
 import bootstrapConfig from './TechStack/Courses/BootstrapCourse/courseConfig';
+import cConfig from './TechStack/Courses/CCourse/courseConfig';
+import cppConfig from './TechStack/Courses/CPPCourse/courseConfig';
 
 // JavaScript Course Chapters - Basics
 import JSIntroduction from './TechStack/Courses/JavaScriptCourse/chapters/basics/Introduction';
@@ -136,7 +143,8 @@ const importComponent = (course, category, section) => {
         'sql': 'SQLCourse',
         'python': 'PythonCourse',
         'php': 'PHPCourse',
-        'bootstrap': 'BootstrapCourse'
+        'bootstrap': 'BootstrapCourse',
+        'c': 'CCourse'
       };
       
       const courseDir = courseMapping[course.toLowerCase()] || 
@@ -201,45 +209,10 @@ const importComponent = (course, category, section) => {
   return componentCache[section.id];
 };
 
-// Error Boundary Component
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error, errorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="error-boundary">
-          <h2>Something went wrong.</h2>
-          <button onClick={() => window.location.reload()}>Refresh Page</button>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
-
-// Loading Component
-const LoadingFallback = () => (
-  <div className="loading-fallback">
-    <h3>Loading...</h3>
-  </div>
-);
-
 function App() {
   return (
     <ErrorBoundary>
-      <Router>
+      <>
         <Navbar/>
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
@@ -256,6 +229,9 @@ function App() {
             <Route path="/courses/mobile-development" element={<MobileDevelopment />} />
             <Route path="/courses/ui-ux-design" element={<UIUXDesign />} />
             
+            {/* TechStack Routes */}
+            <Route path="/techstack/courses/data-science/*" element={<DataScienceCourse />} />
+            
             {/* Course Routes with Error Boundaries */}
             {[
               { path: "/javascript-course", element: JavaScriptCourse, config: jsConfig },
@@ -266,7 +242,9 @@ function App() {
               { path: "/sql-course", element: SQLCourse, config: sqlConfig },
               { path: "/python-course", element: PythonCourse, config: pythonConfig },
               { path: "/php-course", element: PHPCourse, config: phpConfig },
-              { path: "/bootstrap-course", element: BootstrapCourse, config: bootstrapConfig }
+              { path: "/bootstrap-course", element: BootstrapCourse, config: bootstrapConfig },
+              { path: "/c-course", element: CCourse, config: cConfig },
+              { path: "/cpp-course", element: CPPCourse, config: cppConfig }
             ].map(({ path, element: CourseComponent, config }) => (
               <Route
                 key={path}
@@ -288,7 +266,7 @@ function App() {
                     return (
                       <Route
                         key={section.id}
-                        path={section.id}
+                        path={`${category}/${section.id}`}
                         element={
                           <ErrorBoundary>
                             <Suspense fallback={<LoadingFallback />}>
@@ -305,7 +283,7 @@ function App() {
           </Routes>
         </Suspense>
         <Footer/>
-      </Router>
+      </>
     </ErrorBoundary>
   );
 }

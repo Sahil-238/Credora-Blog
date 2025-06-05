@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, ChevronDown, Search, User, Bell } from 'lucide-react';
+import { Menu, X, ChevronDown, Search, Bell } from 'lucide-react';
 import { useUser, UserButton, SignInButton, SignUpButton } from "@clerk/clerk-react";
 import { Link, useLocation } from "react-router-dom";
 import { assets } from '../assets/assets';
@@ -15,19 +15,31 @@ const Navbar = () => {
     { name: 'Home', href: '/', hasDropdown: false },
     {
       name: 'Courses', href: '/courses', hasDropdown: true, dropdownItems: [
-        { name: 'JavaScript', href: '/javascript-course' },
-        { name: 'CSS', href: '/css-course' },
-        { name: 'React', href: '/react-course' },
-        { name: 'Node.js', href: '/nodejs-course' },
-        { name: 'Java', href: '/java-course' },
-        { name: 'Python', href: '/python-course' },
-        { name: 'PHP', href: '/php-course' },
-        { name: 'SQL', href: '/sql-course' },
-        { name: 'Bootstrap', href: '/bootstrap-course' },
-        { name: 'Web Development', href: '/courses/web-development' },
-        { name: 'Data Science', href: '/courses/data-science' },
-        { name: 'Mobile Development', href: '/courses/mobile-development' },
-        { name: 'UI/UX Design', href: '/courses/ui-ux-design' }
+        { name: 'Programming Languages', items: [
+          { name: 'C Programming', href: '/c-course' },
+          { name: 'C++', href: '/cpp-course' },
+          { name: 'C#', href: '/csharp-course' },
+          { name: 'Java', href: '/java-course' },
+          { name: 'Python', href: '/python-course' },
+          { name: 'JavaScript', href: '/javascript-course' },
+          { name: 'PHP', href: '/php-course' },
+          { name: 'jQuery', href: '/jquery-course' }
+        ]},
+        { name: 'Web Technologies', items: [
+          { name: 'HTML & CSS', href: '/css-course' },
+          { name: 'React', href: '/react-course' },
+          { name: 'Node.js', href: '/nodejs-course' },
+          { name: 'Bootstrap', href: '/bootstrap-course' }
+        ]},
+        { name: 'Databases', items: [
+          { name: 'SQL', href: '/sql-course' }
+        ]},
+        { name: 'Career Paths', items: [
+          { name: 'Web Development', href: '/courses/web-development' },
+          { name: 'Data Science', href: '/techstack/courses/data-science' },
+          { name: 'Mobile Development', href: '/courses/mobile-development' },
+          { name: 'UI/UX Design', href: '/courses/ui-ux-design' }
+        ]}
       ]
     },
     { name: 'About', href: '/about', hasDropdown: false },
@@ -56,8 +68,13 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const handleDropdown = (index) => setActiveDropdown(activeDropdown === index ? null : index);
 
+  const handleNavigation = (href) => {
+    setIsMenuOpen(false);
+    setActiveDropdown(null);
+  };
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
@@ -85,11 +102,13 @@ const Navbar = () => {
                     {item.name}
                     <ChevronDown className={`ml-1 h-4 w-4 transform transition-transform ${activeDropdown === index ? 'rotate-180' : ''}`} />
                   </button>
-                ) : (                  <Link
+                ) : (
+                  <Link
                     to={item.href}
                     className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                       isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-transparent'
                     } ${location.pathname === item.href ? 'bg-transparent text-blue-600' : ''}`}
+                    onClick={() => handleNavigation(item.href)}
                   >
                     {item.name}
                   </Link>
@@ -97,16 +116,23 @@ const Navbar = () => {
 
                 {/* Dropdown */}
                 {item.hasDropdown && (
-                  <div className={`absolute z-30 top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 transition-all duration-200 ${activeDropdown === index ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
-                    {item.dropdownItems.map((dropItem, i) => (
-                      <Link
-                        key={i}
-                        to={dropItem.href}
-                        className="block px-4 py-3 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-                        onClick={() => setActiveDropdown(null)}
-                      >
-                        {dropItem.name}
-                      </Link>
+                  <div className={`absolute z-30 top-full left-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-gray-100 py-2 transition-all duration-200 ${activeDropdown === index ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
+                    {item.dropdownItems.map((category, i) => (
+                      <div key={i} className="py-2">
+                        <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          {category.name}
+                        </div>
+                        {category.items.map((dropItem, j) => (
+                          <Link
+                            key={j}
+                            to={dropItem.href}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+                            onClick={() => handleNavigation(dropItem.href)}
+                          >
+                            {dropItem.name}
+                          </Link>
+                        ))}
+                      </div>
                     ))}
                   </div>
                 )}
@@ -130,10 +156,16 @@ const Navbar = () => {
             ) : (
               <>
                 <SignInButton>
-                  <button className="text-sm px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg">Sign In</button>
+                  <button className={`text-sm px-3 py-2 rounded-lg transition-all duration-200 ${
+                    isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-white/10'
+                  }`}>
+                    Sign In
+                  </button>
                 </SignInButton>
                 <SignUpButton>
-                  <button className="text-sm px-3 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg">Sign Up</button>
+                  <button className="text-sm px-3 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg">
+                    Sign Up
+                  </button>
                 </SignUpButton>
               </>
             )}
@@ -141,7 +173,10 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden">
-            <button onClick={toggleMenu} className={`p-2 rounded-lg ${isScrolled ? 'text-gray-600 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-white/10'}`}>
+            <button 
+              onClick={toggleMenu} 
+              className={`p-2 rounded-lg ${isScrolled ? 'text-gray-600 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-white/10'}`}
+            >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
@@ -149,41 +184,59 @@ const Navbar = () => {
 
         {/* Mobile Nav */}
         <div className={`lg:hidden transition-all duration-300 overflow-hidden ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
-          <div className="bg-white rounded-xl mt-4 shadow-xl border border-gray-100 p-4 space-y-2">
+          <div className="bg-white rounded-xl mt-4 shadow-xl border border-gray-100 p-4 space-y-4">
             {navItems.map((item, index) => (
               <div key={index}>
-                <Link
-                  to={item.href}
-                  className={`block px-2 py-2 text-gray-700 font-medium hover:text-blue-600 hover:bg-blue-50 ${
-                    location.pathname === item.href ? 'bg-blue-50 text-blue-600' : ''
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-                {item.hasDropdown && item.dropdownItems.map((drop, i) => (
+                {item.hasDropdown ? (
+                  <>
+                    <div className="font-medium text-gray-700 px-2 py-2">{item.name}</div>
+                    {item.dropdownItems.map((category, i) => (
+                      <div key={i} className="mb-4">
+                        <div className="px-4 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          {category.name}
+                        </div>
+                        {category.items.map((dropItem, j) => (
+                          <Link
+                            key={j}
+                            to={dropItem.href}
+                            className="block px-6 py-1 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                            onClick={() => handleNavigation(dropItem.href)}
+                          >
+                            {dropItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    ))}
+                  </>
+                ) : (
                   <Link
-                    key={i}
-                    to={drop.href}
-                    className="block px-6 py-1 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50"
-                    onClick={() => setIsMenuOpen(false)}
+                    to={item.href}
+                    className={`block px-2 py-2 text-gray-700 font-medium hover:text-blue-600 hover:bg-blue-50 ${
+                      location.pathname === item.href ? 'bg-blue-50 text-blue-600' : ''
+                    }`}
+                    onClick={() => handleNavigation(item.href)}
                   >
-                    {drop.name}
+                    {item.name}
                   </Link>
-                ))}
+                )}
               </div>
             ))}
 
+            {/* Mobile Auth Buttons */}
             <div className="pt-4 border-t">
               {isSignedIn ? (
                 <UserButton afterSignOutUrl="/" />
               ) : (
                 <>
                   <SignInButton>
-                    <button className="w-full mb-2 bg-blue-100 text-blue-700 py-2 rounded-lg font-medium hover:bg-blue-200">Sign In</button>
+                    <button className="w-full mb-2 bg-blue-100 text-blue-700 py-2 rounded-lg font-medium hover:bg-blue-200">
+                      Sign In
+                    </button>
                   </SignInButton>
                   <SignUpButton>
-                    <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700">Sign Up</button>
+                    <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700">
+                      Sign Up
+                    </button>
                   </SignUpButton>
                 </>
               )}

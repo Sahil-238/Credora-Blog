@@ -5,6 +5,7 @@ import ExploreCards from '../components/ExploreCards';
 import backgroundVideo from '../video/83274-581386222.mp4';
 import Cards from '../components/Cards';
 import { FiSearch, FiBook, FiUsers, FiAward, FiMonitor, FiTarget, FiCode, FiCheck, FiTrendingUp, FiGlobe } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,6 +39,10 @@ function Home() {
     }
   };
 
+  const handleCourseClick = (path) => {
+    navigate(path);
+  };
+
   const webDevCourses = [
     { title: "JavaScript", path: "/javascript-course" },
     { title: "HTML", path: "/html" },
@@ -47,12 +52,13 @@ function Home() {
     { title: "Java", path: "/java-course" },
     { title: "Django", path: "/django" },
     { title: "Frontend Development", path: "/frontend" },
-    { title: "Backend Development", path: "/backend" }
+    { title: "Backend Development", path: "/backend" },
+    { title: 'jQuery', description: 'Learn jQuery, the fast and feature-rich JavaScript library designed to simplify HTML DOM manipulation, event handling, animations, and Ajax interactions.', image: '/images/jquery-logo.png', href: '/jquery-course', level: 'Beginner to Advanced', duration: '20-25 hours', topics: ['DOM Manipulation', 'Events', 'Effects', 'AJAX', 'Traversing'] }
   ];
 
   const aiMlCourses = [
     { title: "Machine Learning", path: "/machine-learning" },
-    { title: "Data Science", path: "/data-science" },
+    { title: "Data Science", path: "/tech-stack/courses/data-science" },
     { title: "Data Analysis", path: "/data-analysis" },
     { title: "Data Visualization", path: "/data-visualization" },
     { title: "Deep Learning", path: "/deep-learning" },
@@ -304,69 +310,42 @@ function Home() {
           </div>
         </section>
 
-        {/* Course Sections */}
-        <div className="py-16">
+        {/* Course Categories Section */}
+        <div className="py-20">
           <div className="max-w-7xl mx-auto px-4">
-            {/* Web Development Section */}
+            <h2 className="text-4xl font-bold text-center mb-4">Popular Course Categories</h2>
+            <p className="text-gray-600 text-center mb-12">Choose from our wide range of courses</p>
+            
+            {/* Web Development Courses */}
             <div className="mb-16">
-              <div className="flex justify-between items-center mb-8">
-                <h2 className="text-3xl font-bold">Web Development</h2>
-                <button className="group flex items-center space-x-2 text-blue-600 hover:text-blue-700">
-                  <span>View All</span>
-                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <h3 className="text-2xl font-semibold mb-8">Web Development</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {webDevCourses.map((course, index) => (
-                  <div 
+                  <Link
                     key={index}
-                    onClick={() => navigate(course.path)}
-                    className="group bg-white border border-gray-200 hover:border-blue-400 rounded-xl p-6 cursor-pointer transition-all duration-300 hover:shadow-lg"
+                    to={course.path}
+                    className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer p-6"
                   >
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600">{course.title}</h3>
-                        <p className="text-gray-600 text-sm">Master {course.title} from scratch</p>
-                      </div>
-                      <svg className="w-6 h-6 text-gray-400 group-hover:text-blue-600 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </div>
+                    <h4 className="text-lg font-semibold mb-2">{course.title}</h4>
+                    <p className="text-gray-600">Learn {course.title}</p>
+                  </Link>
                 ))}
               </div>
             </div>
 
-            {/* AI ML Section with similar styling */}
-            <div className="py-12">
-              <div className="flex justify-between items-center mb-8">
-                <h2 className="text-3xl font-bold">AI ML & Data Science</h2>
-                <button className="group flex items-center space-x-2 text-purple-600 hover:text-purple-700">
-                  <span>View All</span>
-                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* AI & ML Courses */}
+            <div>
+              <h3 className="text-2xl font-semibold mb-8">AI & Machine Learning</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {aiMlCourses.map((course, index) => (
-                  <div 
+                  <Link
                     key={index}
-                    onClick={() => navigate(course.path)}
-                    className="group bg-white border border-gray-200 hover:border-purple-400 rounded-xl p-6 cursor-pointer transition-all duration-300 hover:shadow-lg"
+                    to={course.path}
+                    className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer p-6"
                   >
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2 group-hover:text-purple-600">{course.title}</h3>
-                        <p className="text-gray-600 text-sm">Explore {course.title}</p>
-                      </div>
-                      <svg className="w-6 h-6 text-gray-400 group-hover:text-purple-600 transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </div>
+                    <h4 className="text-lg font-semibold mb-2">{course.title}</h4>
+                    <p className="text-gray-600">Learn {course.title}</p>
+                  </Link>
                 ))}
               </div>
             </div>
