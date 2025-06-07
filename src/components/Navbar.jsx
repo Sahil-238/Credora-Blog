@@ -6,7 +6,6 @@ import { assets } from '../assets/assets';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const dropdownRefs = useRef([]);
   const { isSignedIn } = useUser();
@@ -35,13 +34,6 @@ const Navbar = () => {
     { name: 'Contact', href: '/contact', hasDropdown: false }
   ];
 
-  // Scroll effect
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   // Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -57,7 +49,7 @@ const Navbar = () => {
   const handleDropdown = (index) => setActiveDropdown(activeDropdown === index ? null : index);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent`}>
+    <nav className="relative z-50 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
@@ -75,9 +67,7 @@ const Navbar = () => {
               >
                 {item.hasDropdown ? (
                   <button
-                    className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                      isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-white/10'
-                    }`}
+                    className="flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-white hover:text-blue-200 hover:bg-white/10"
                     onClick={() => handleDropdown(index)}
                     aria-haspopup={true}
                     aria-expanded={activeDropdown === index}
@@ -85,11 +75,12 @@ const Navbar = () => {
                     {item.name}
                     <ChevronDown className={`ml-1 h-4 w-4 transform transition-transform ${activeDropdown === index ? 'rotate-180' : ''}`} />
                   </button>
-                ) : (                  <Link
+                ) : (
+                  <Link
                     to={item.href}
-                    className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                      isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-transparent'
-                    } ${location.pathname === item.href ? 'bg-transparent text-blue-600' : ''}`}
+                    className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-white hover:text-blue-200 hover:bg-transparent ${
+                      location.pathname === item.href ? 'bg-transparent text-blue-300' : ''
+                    }`}
                   >
                     {item.name}
                   </Link>
@@ -116,11 +107,11 @@ const Navbar = () => {
 
           {/* Desktop Right */}
           <div className="hidden lg:flex items-center space-x-4">
-            <button className={`p-2 rounded-lg ${isScrolled ? 'text-gray-600 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-white/10'}`}>
+            <button className="p-2 rounded-lg text-white hover:text-blue-200 hover:bg-white/10">
               <Search className="h-5 w-5" />
             </button>
 
-            <button className={`p-2 rounded-lg relative ${isScrolled ? 'text-gray-600 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-white/10'}`}>
+            <button className="p-2 rounded-lg relative text-white hover:text-blue-200 hover:bg-white/10">
               <Bell className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
             </button>
@@ -130,7 +121,7 @@ const Navbar = () => {
             ) : (
               <>
                 <SignInButton>
-                  <button className="text-sm px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg">Sign In</button>
+                  <button className="text-sm px-3 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg">Sign In</button>
                 </SignInButton>
                 <SignUpButton>
                   <button className="text-sm px-3 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg">Sign Up</button>
@@ -141,7 +132,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden">
-            <button onClick={toggleMenu} className={`p-2 rounded-lg ${isScrolled ? 'text-gray-600 hover:text-blue-600 hover:bg-blue-50' : 'text-white hover:text-blue-200 hover:bg-white/10'}`}>
+            <button onClick={toggleMenu} className="p-2 rounded-lg text-white hover:text-blue-200 hover:bg-white/10">
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
