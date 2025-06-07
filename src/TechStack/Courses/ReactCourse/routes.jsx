@@ -31,7 +31,7 @@ const ClassComponents = React.lazy(() => import('./chapters/components/ClassComp
 const FunctionalComponents = React.lazy(() => import('./chapters/components/FunctionalComponents'));
 const HOC = React.lazy(() => import('./chapters/components/HigherOrderComponent'));
 const RenderProps = React.lazy(() => import('./chapters/components/RenderProps'));
-const Composition = React.lazy(() => import('./chapters/components/Composition'));
+const ComponentComposition = React.lazy(() => import('./chapters/components/ComponentComposition'));
 const ErrorBoundaries = React.lazy(() => import('./chapters/components/ErrorBoundaries'));
 const CodeSplitting = React.lazy(() => import('./chapters/components/CodeSplitting'));
 
@@ -128,7 +128,7 @@ const routes = (
     <Route path="functional-components" element={wrapInErrorBoundary(<FunctionalComponents />)} />
     <Route path="higher-order-components" element={wrapInErrorBoundary(<HOC />)} />
     <Route path="render-props" element={wrapInErrorBoundary(<RenderProps />)} />
-    <Route path="composition" element={wrapInErrorBoundary(<Composition />)} />
+    <Route path="component-composition" element={wrapInErrorBoundary(<ComponentComposition />)} />
     <Route path="error-boundaries" element={wrapInErrorBoundary(<ErrorBoundaries />)} />
     <Route path="code-splitting" element={wrapInErrorBoundary(<CodeSplitting />)} />
 

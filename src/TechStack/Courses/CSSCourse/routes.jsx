@@ -2,25 +2,6 @@ import React, { Suspense } from 'react';
 import { Route } from 'react-router-dom';
 import CSSCourse from './CSSCourse';
 
-// Basics
-import Introduction from './chapters/basics/Introduction';
-import Syntax from './chapters/basics/Syntax';
-import Selectors from './chapters/basics/Selectors';
-import HowTo from './chapters/basics/HowTo';
-import Comments from './chapters/basics/Comments';
-import Colors from './chapters/basics/Colors';
-import BoxModel from './chapters/basics/BoxModel';
-import Typography from './chapters/basics/Typography';
-
-// Layout - Using lazy loading
-const Display = React.lazy(() => import('./chapters/layout/Display'));
-const MaxWidth = React.lazy(() => import('./chapters/layout/max-width'));
-const Position = React.lazy(() => import('./chapters/layout/Position'));
-const ZIndex = React.lazy(() => import('./chapters/layout/ZIndex'));
-const Overflow = React.lazy(() => import('./chapters/layout/Overflow'));
-const Float = React.lazy(() => import('./chapters/layout/Float'));
-const Align = React.lazy(() => import('./chapters/layout/Align'));
-
 // Components
 import Tooltips from './chapters/components/Tooltips';
 import ImageStyling from './chapters/components/ImageStyling';
@@ -31,6 +12,33 @@ import MultipleColumns from './chapters/components/MultipleColumns';
 import UserInterface from './chapters/components/UserInterface';
 import Variables from './chapters/components/Variables';
 import BoxSizing from './chapters/components/BoxSizing';
+
+// Basics
+import Introduction from './chapters/basics/Introduction';
+import Syntax from './chapters/basics/Syntax';
+import Selectors from './chapters/basics/Selectors';
+import Colors from './chapters/basics/Colors';
+import Backgrounds from './chapters/basics/Backgrounds';
+import Borders from './chapters/basics/Borders';
+import Margins from './chapters/basics/Margins';
+import Padding from './chapters/basics/Padding';
+import BoxModel from './chapters/basics/BoxModel';
+
+// Text & Typography
+import Text from './chapters/text/Text';
+import Fonts from './chapters/text/Fonts';
+import Icons from './chapters/text/Icons';
+import Links from './chapters/text/Links';
+import Lists from './chapters/text/Lists';
+import Tables from './chapters/text/Tables';
+import Typography from './chapters/text/Typography';
+
+// Layout
+import Display from './chapters/layout/Display';
+import Position from './chapters/layout/Position';
+import ZIndex from './chapters/layout/ZIndex';
+import Overflow from './chapters/layout/Overflow';
+import Float from './chapters/layout/Float';
 
 // Flexbox
 import FlexboxIntro from './chapters/flexbox/FlexboxIntro';
@@ -45,13 +53,17 @@ import GridContainer from './chapters/grid/GridContainer';
 import GridItem from './chapters/grid/GridItem';
 
 // Responsive
-import RwdIntro from './chapters/responsive/RWDIntro';
-import RWDViewport from './chapters/responsive/RWDViewport';
-import RWDGridView from './chapters/responsive/RWDGridView';
-import RWDMediaQueries from './chapters/responsive/RWDMediaQueries';
-import RWDImages from './chapters/responsive/RWDImages';
-import RWDVideos from './chapters/responsive/RWDVideos';
-import RWDFrameworks from './chapters/responsive/RWDFrameworks';
+import RWDIntro from './chapters/responsive/RwdIntro';
+import RWDViewport from './chapters/responsive/RwdViewport';
+import RWDGridView from './chapters/responsive/RwdGridView';
+import RWDMediaQueries from './chapters/responsive/RwdMediaQueries';
+import RWDImages from './chapters/responsive/RwdImages';
+import RWDVideos from './chapters/responsive/RwdVideos';
+import RWDFrameworks from './chapters/responsive/RwdFrameworks';
+
+// Lazy loaded components
+const MaxWidth = React.lazy(() => import('./chapters/layout/max-width'));
+const Align = React.lazy(() => import('./chapters/layout/Align'));
 
 // Loading component
 const LoadingComponent = () => (
@@ -66,10 +78,18 @@ const routes = (
     <Route path="introduction" element={<Introduction />} />
     <Route path="syntax" element={<Syntax />} />
     <Route path="selectors" element={<Selectors />} />
-    <Route path="how-to" element={<HowTo />} />
-    <Route path="comments" element={<Comments />} />
     <Route path="colors" element={<Colors />} />
+    <Route path="backgrounds" element={<Backgrounds />} />
+    <Route path="borders" element={<Borders />} />
+    <Route path="margins" element={<Margins />} />
+    <Route path="padding" element={<Padding />} />
     <Route path="box-model" element={<BoxModel />} />
+    <Route path="text" element={<Text />} />
+    <Route path="fonts" element={<Fonts />} />
+    <Route path="icons" element={<Icons />} />
+    <Route path="links" element={<Links />} />
+    <Route path="lists" element={<Lists />} />
+    <Route path="tables" element={<Tables />} />
     <Route path="typography" element={<Typography />} />
 
     {/* Layout */}
@@ -132,14 +152,14 @@ const routes = (
     <Route path="grid-container" element={<GridContainer />} />
     <Route path="grid-item" element={<GridItem />} />
 
-    {/* Responsive */}
-    <Route path="rwd-intro" element={<RwdIntro />} />
-    <Route path="viewport" element={<RWDViewport />} />
-    <Route path="grid-view" element={<RWDGridView />} />
-    <Route path="media-queries" element={<RWDMediaQueries />} />
-    <Route path="images" element={<RWDImages />} />
-    <Route path="videos" element={<RWDVideos />} />
-    <Route path="frameworks" element={<RWDFrameworks />} />
+    {/* Responsive Design */}
+    <Route path="rwd-intro" element={<RWDIntro />} />
+    <Route path="rwd-viewport" element={<RWDViewport />} />
+    <Route path="rwd-grid-view" element={<RWDGridView />} />
+    <Route path="rwd-media-queries" element={<RWDMediaQueries />} />
+    <Route path="rwd-images" element={<RWDImages />} />
+    <Route path="rwd-videos" element={<RWDVideos />} />
+    <Route path="rwd-frameworks" element={<RWDFrameworks />} />
   </Route>
 );
 

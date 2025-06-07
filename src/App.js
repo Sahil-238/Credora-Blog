@@ -124,8 +124,11 @@ const isPascalCase = (str) => {
 
 // Import all components dynamically
 const importComponent = (course, category, section) => {
-  if (!componentCache[section.id]) {
-    componentCache[section.id] = React.lazy(() => {
+  // Create a unique cache key that includes the course name and category
+  const cacheKey = `${course}-${category}-${section.id}`;
+  
+  if (!componentCache[cacheKey]) {
+    componentCache[cacheKey] = React.lazy(() => {
       // Convert course name to match directory structure with correct casing
       const courseMapping = {
         'javascript': 'JavaScriptCourse',
@@ -139,66 +142,36 @@ const importComponent = (course, category, section) => {
         'bootstrap': 'BootstrapCourse'
       };
       
-      const courseDir = courseMapping[course.toLowerCase()] || 
-        (course.charAt(0).toUpperCase() + course.slice(1) + 'Course');
-      
-      // Special cases for components that are directly in the chapters directory
-      const directComponents = {
-        JavaScriptCourse: ['Introduction', 'Basics', 'DOM', 'Advanced', 'Projects'],
-        CSSCourse: ['Introduction', 'Basics', 'Layout', 'Advanced'],
-        ReactCourse: ['Introduction', 'Basics', 'Hooks', 'Advanced'],
-        // Add other courses' direct components as needed
-      };
-
-      // Special cases for file names that don't follow the standard convention
-      const specialFileNames = {
-        'typeof': 'typeofOperator',
-        'type-conversion': 'TypeConversion',
-        'data-types': 'DataTypesOverview',
-        'string-methods': 'StringMethods',
-        'string-search': 'StringSearch',
-        'string-templates': 'StringTemplates',
-        'number-methods': 'NumberMethods',
-        'BigInt': 'BigInt',
-        'arrow-function': 'ArrowFunctions',
-        'json': 'JSON',
-        'ajax': 'AJAX',
-        'fetch-api': 'FetchAPI',
-        'dom-intro': 'DOMIntro',
-        'dom-methods': 'DOMMethods',
-        'dom-elements': 'DOMElements',
-        'dom-events': 'DOMEvents',
-        'dom-navigation': 'DOMNavigation',
-        'window': 'WindowObject',
-        'this-keyword': 'thisKeyword',
-        'regexp': 'RegExp',
-        'errors': 'ErrorHandling',
-        'rwd-intro': 'RWDIntro'
-      };
-      
-      // Get the component name, handling special cases
-      const rawComponentName = section.id;
-      const componentName = specialFileNames[rawComponentName] || 
-        rawComponentName.split('-').map(part => 
-          part.charAt(0).toUpperCase() + part.slice(1)
-        ).join('');
-      
-      if (directComponents[courseDir]?.includes(componentName)) {
-        return import(`./TechStack/Courses/${courseDir}/chapters/${componentName}`);
+      const courseDir = courseMapping[course.toLowerCase()];
+      if (!courseDir) {
+        throw new Error(`Unknown course: ${course}`);
       }
+
+      // Get the component name
+      const componentName = isPascalCase(section.id) ? section.id : 
+        toPascalCase(section.id);
+
+      // Construct the import path
+      const importPath = `./TechStack/Courses/${courseDir}/chapters/${category}/${componentName}`;
+      console.log(`Attempting to import: ${importPath} for ${course} course`);
       
-      // For other components, try the category subfolder with both .jsx and .js extensions
-      return import(`./TechStack/Courses/${courseDir}/chapters/${category}/${componentName}.jsx`)
-        .catch(error => 
-          import(`./TechStack/Courses/${courseDir}/chapters/${category}/${componentName}.js`)
-        )
+      return import(`${importPath}.jsx`)
+        .catch(error => import(`${importPath}.js`))
         .catch(error => {
-          console.error(`Failed to load component: ${componentName} in ${category} for ${courseDir}`, error);
-          throw error;
+          console.error(`Failed to load component: ${importPath}`, error);
+          return {
+            default: () => (
+              <div className="p-6 text-center">
+                <h2 className="text-xl text-red-600">Component Not Found</h2>
+                <p className="text-gray-600">Could not load: {section.title}</p>
+                <p className="text-gray-600 mt-2">Course: {course}, Category: {category}</p>
+              </div>
+            )
+          };
         });
     });
   }
-  return componentCache[section.id];
+  return componentCache[cacheKey];
 };
 
 // Error Boundary Component

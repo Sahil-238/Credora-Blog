@@ -34,7 +34,7 @@ const courseStructure = {
       { id: 'functional-components', title: 'Functional Components' },
       { id: 'higher-order-components', title: 'Higher-Order Components' },
       { id: 'render-props', title: 'Render Props' },
-      { id: 'composition', title: 'Component Composition' },
+      { id: 'component-composition', title: 'Component Composition' },
       { id: 'error-boundaries', title: 'Error Boundaries' },
       { id: 'code-splitting', title: 'Code Splitting' }
     ]

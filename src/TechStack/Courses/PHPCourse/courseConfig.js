@@ -1,80 +1,80 @@
 const courseConfig = {
-  basics: {
+  'basics': {
     title: 'PHP Basics',
     sections: [
-      { id: 'intro', title: 'Introduction to PHP' },
-      { id: 'install', title: 'Installation' },
+      { id: 'introduction', title: 'Introduction to PHP' },
+      { id: 'installation', title: 'Installation' },
       { id: 'syntax', title: 'Syntax' },
       { id: 'variables', title: 'Variables' },
       { id: 'data-types', title: 'Data Types' },
       { id: 'operators', title: 'Operators' },
-      { id: 'control-flow', title: 'Control Flow' },
-    ],
+      { id: 'control-flow', title: 'Control Flow' }
+    ]
   },
-  forms: {
+  'forms': {
     title: 'Forms & Input',
     sections: [
-      { id: 'basics', title: 'Form Handling' },
-      { id: 'validation', title: 'Form Validation' },
-      { id: 'security', title: 'Form Security' },
-    ],
+      { id: 'form-handling', title: 'Form Handling' },
+      { id: 'form-validation', title: 'Form Validation' },
+      { id: 'form-security', title: 'Form Security' }
+    ]
   },
-  advanced: {
+  'advanced': {
     title: 'Advanced Topics',
     sections: [
       { id: 'date-time', title: 'Date and Time' },
-      { id: 'files', title: 'File Handling' },
+      { id: 'file-handling', title: 'File Handling' },
       { id: 'sessions', title: 'Sessions' },
-      { id: 'cookies', title: 'Cookies' },
-    ],
+      { id: 'cookies', title: 'Cookies' }
+    ]
   },
-  oop: {
+  'oop': {
     title: 'Object-Oriented PHP',
     sections: [
-      { id: 'classes', title: 'Classes and Objects' },
+      { id: 'classes-objects', title: 'Classes and Objects' },
       { id: 'inheritance', title: 'Inheritance' },
-      { id: 'traits', title: 'Traits' },
-    ],
+      { id: 'traits', title: 'Traits' }
+    ]
   },
-  mysql: {
+  'database': {
     title: 'MySQL Database',
     sections: [
-      { id: 'connect', title: 'Database Connection' },
-      { id: 'crud', title: 'CRUD Operations' },
-      { id: 'prepared', title: 'Prepared Statements' },
-    ],
+      { id: 'database-connection', title: 'Database Connection' },
+      { id: 'crud-operations', title: 'CRUD Operations' },
+      { id: 'prepared-statements', title: 'Prepared Statements' }
+    ]
   },
-  xml: {
+  'xml': {
     title: 'XML Processing',
     sections: [
-      { id: 'parsing', title: 'XML Parsing' },
-      { id: 'dom', title: 'XML DOM' },
-    ],
+      { id: 'xml-parsing', title: 'XML Parsing' },
+      { id: 'xml-dom', title: 'XML DOM' }
+    ]
   },
-  ajax: {
+  'ajax': {
     title: 'AJAX with PHP',
     sections: [
-      { id: 'intro', title: 'AJAX Introduction' },
-      { id: 'fetch', title: 'Fetch API' },
-      { id: 'jquery', title: 'jQuery AJAX' },
-    ],
+      { id: 'ajax-introduction', title: 'AJAX Introduction' },
+      { id: 'fetch-api', title: 'Fetch API' },
+      { id: 'jquery-ajax', title: 'jQuery AJAX' }
+    ]
   },
-  examples: {
+  'examples': {
     title: 'Examples',
     sections: [
-      { id: 'login', title: 'Login System' },
-      { id: 'crud', title: 'CRUD Application' },
-      { id: 'api', title: 'REST API' },
-    ],
+      { id: 'login-system', title: 'Login System' },
+      { id: 'crud-application', title: 'CRUD Application' },
+      { id: 'rest-api', title: 'REST API' }
+    ]
   },
-  reference: {
+  'reference': {
     title: 'Reference',
     sections: [
-      { id: 'functions', title: 'Built-in Functions' },
+      { id: 'built-in-functions', title: 'Built-in Functions' },
       { id: 'constants', title: 'Constants' },
-      { id: 'errors', title: 'Error Handling' },
-    ],
-  },
+      { id: 'error-handling', title: 'Error Handling' }
+    ]
+  }
 };
 
 export default courseConfig; 

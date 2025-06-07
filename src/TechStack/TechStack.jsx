@@ -1,3 +1,6 @@
+import React from 'react';
+import { FiCode } from 'react-icons/fi';
+
 const courses = [
   {
     title: "Python Course",
