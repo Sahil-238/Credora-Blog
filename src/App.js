@@ -12,6 +12,7 @@ import WebDevelopment from './pages/WebDevelopment';
 import DataScience from './pages/DataScience';
 import MobileDevelopment from './pages/MobileDevelopment';
 import UIUXDesign from './pages/UIUXDesign';
+import Notifications from './pages/Notifications';
 
 // Course imports
 import JavaScriptCourse from './TechStack/Courses/JavaScriptCourse/JavaScriptCourse';
@@ -34,6 +35,18 @@ import sqlConfig from './TechStack/Courses/SQLCourse/courseConfig';
 import pythonConfig from './TechStack/Courses/PythonCourse/courseConfig';
 import phpConfig from './TechStack/Courses/PHPCourse/courseConfig';
 import bootstrapConfig from './TechStack/Courses/BootstrapCourse/courseConfig';
+
+// HTML Course Components
+import HTMLCourse from './TechStack/Courses/HTMLCourse/HTMLCourse';
+import Introduction from './TechStack/Courses/HTMLCourse/chapters/basics/Introduction';
+import Editors from './TechStack/Courses/HTMLCourse/chapters/basics/Editors';
+import Basic from './TechStack/Courses/HTMLCourse/chapters/basics/Basic';
+import Elements from './TechStack/Courses/HTMLCourse/chapters/basics/Elements';
+import Attributes from './TechStack/Courses/HTMLCourse/chapters/basics/Attributes';
+import Headings from './TechStack/Courses/HTMLCourse/chapters/basics/Headings';
+import Paragraphs from './TechStack/Courses/HTMLCourse/chapters/basics/Paragraphs';
+import Styles from './TechStack/Courses/HTMLCourse/chapters/basics/Styles';
+import Formatting from './TechStack/Courses/HTMLCourse/chapters/basics/Formatting';
 
 // JavaScript Course Chapters - Basics
 import JSIntroduction from './TechStack/Courses/JavaScriptCourse/chapters/basics/Introduction';
@@ -214,69 +227,85 @@ function App() {
     <ErrorBoundary>
       <Router>
         <Navbar/>
-        <Suspense fallback={<LoadingFallback />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/introduction" element={<MainIntroduction />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:id" element={<BlogDetail />} />
-            <Route path="/courses/web-development" element={<WebDevelopment />} />
-            <Route path="/courses/data-science" element={<DataScience />} />
-            <Route path="/courses/mobile-development" element={<MobileDevelopment />} />
-            <Route path="/courses/ui-ux-design" element={<UIUXDesign />} />
-            
-            {/* Course Routes with Error Boundaries */}
-            {[
-              { path: "/javascript-course", element: JavaScriptCourse, config: jsConfig },
-              { path: "/css-course", element: CSSCourse, config: cssConfig },
-              { path: "/react-course", element: ReactCourse, config: reactConfig },
-              { path: "/nodejs-course", element: NodeJSCourse, config: nodeConfig },
-              { path: "/java-course", element: JavaCourse, config: javaConfig },
-              { path: "/sql-course", element: SQLCourse, config: sqlConfig },
-              { path: "/python-course", element: PythonCourse, config: pythonConfig },
-              { path: "/php-course", element: PHPCourse, config: phpConfig },
-              { path: "/bootstrap-course", element: BootstrapCourse, config: bootstrapConfig }
-            ].map(({ path, element: CourseComponent, config }) => (
-              <Route
-                key={path}
-                path={path}
-                element={
-                  <ErrorBoundary>
-                    <CourseComponent />
-                  </ErrorBoundary>
-                }
-              >
-                {Object.entries(config).map(([category, { sections }]) =>
-                  sections.map(section => {
-                    const courseName = path.slice(1).split('-')[0]; // Get the course name without the dash and 'course'
-                    const LazyComponent = importComponent(
-                      courseName,
-                      category,
-                      section
-                    );
-                    return (
-                      <Route
-                        key={section.id}
-                        path={section.id}
-                        element={
-                          <ErrorBoundary>
-                            <Suspense fallback={<LoadingFallback />}>
-                              <LazyComponent />
-                            </Suspense>
-                          </ErrorBoundary>
-                        }
-                      />
-                    );
-                  })
-                )}
+        <main className="pt-20">
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/introduction" element={<MainIntroduction />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/blog/:id" element={<BlogDetail />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/web-development" element={<WebDevelopment />} />
+              <Route path="/data-science" element={<DataScience />} />
+              <Route path="/mobile-development" element={<MobileDevelopment />} />
+              <Route path="/ui-ux-design" element={<UIUXDesign />} />
+
+              {/* HTML Course Routes */}
+              <Route path="/html-course" element={<HTMLCourse />}>
+                <Route path="introduction" element={<Introduction />} />
+                <Route path="editors" element={<Editors />} />
+                <Route path="basic" element={<Basic />} />
+                <Route path="elements" element={<Elements />} />
+                <Route path="attributes" element={<Attributes />} />
+                <Route path="headings" element={<Headings />} />
+                <Route path="paragraphs" element={<Paragraphs />} />
+                <Route path="styles" element={<Styles />} />
+                <Route path="formatting" element={<Formatting />} />
               </Route>
-            ))}
-          </Routes>
-        </Suspense>
+
+              {/* Course Routes with Error Boundaries */}
+              {[
+                { path: "/javascript-course", element: JavaScriptCourse, config: jsConfig },
+                { path: "/css-course", element: CSSCourse, config: cssConfig },
+                { path: "/react-course", element: ReactCourse, config: reactConfig },
+                { path: "/nodejs-course", element: NodeJSCourse, config: nodeConfig },
+                { path: "/java-course", element: JavaCourse, config: javaConfig },
+                { path: "/sql-course", element: SQLCourse, config: sqlConfig },
+                { path: "/python-course", element: PythonCourse, config: pythonConfig },
+                { path: "/php-course", element: PHPCourse, config: phpConfig },
+                { path: "/bootstrap-course", element: BootstrapCourse, config: bootstrapConfig },
+              ].map(({ path, element: CourseComponent, config }) => (
+                <Route
+                  key={path}
+                  path={path}
+                  element={
+                    <ErrorBoundary>
+                      <CourseComponent />
+                    </ErrorBoundary>
+                  }
+                >
+                  {Object.entries(config).map(([category, { sections }]) =>
+                    sections.map(section => {
+                      const courseName = path.slice(1).split('-')[0]; // Get the course name without the dash and 'course'
+                      const LazyComponent = importComponent(
+                        courseName,
+                        category,
+                        section
+                      );
+                      return (
+                        <Route
+                          key={section.id}
+                          path={section.id}
+                          element={
+                            <ErrorBoundary>
+                              <Suspense fallback={<LoadingFallback />}>
+                                <LazyComponent />
+                              </Suspense>
+                            </ErrorBoundary>
+                          }
+                        />
+                      );
+                    })
+                  )}
+                </Route>
+              ))}
+            </Routes>
+          </Suspense>
+        </main>
         <Footer/>
       </Router>
     </ErrorBoundary>
