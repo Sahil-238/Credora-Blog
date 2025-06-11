@@ -1,1 +1,0 @@
-(self.webpackChunkcredora_blog=self.webpackChunkcredora_blog||[]).push([[93596],{16219:(e,t,r)=>{"use strict";r.r(t);var a=r(40253),c=r(38403);test("renders learn react link",(()=>{(0,a.XX)(React.createElement(c.default,null));const e=a.nj.getByText(/learn react/i);expect(e).toBeInTheDocument()}))},42634:()=>{}}]);
