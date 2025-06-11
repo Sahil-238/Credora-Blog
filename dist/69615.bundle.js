@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcredora_blog=self.webpackChunkcredora_blog||[]).push([[69615],{69615:(e,l,s)=>{s.r(l),s.d(l,{default:()=>c});var n=s(96540),r=s.n(n);const c=()=>r().createElement("div",null,r().createElement("h1",null,"Colors in HTML"),r().createElement("p",null,"This page discusses how to use colors in HTML."))}}]);

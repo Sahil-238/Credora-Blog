@@ -23,17 +23,41 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: [
-          /node_modules/,
-          /scripts\/build/
-        ],
+        exclude: [/node_modules/, /scripts\/build/],
         use: {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react']
           }
         }
-      }
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|m4a|aac|oga)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+              esModule: false,
+            },
+          },
+        ],
+      },
     ]
   },
   plugins: [
@@ -41,4 +65,4 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     })
   ]
-}; 
+};
