@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ClerkProvider } from '@clerk/clerk-react';
 
-const clerkFrontendApi ='pk_test_ZW5nYWdpbmctbW9sZS05MC5jbGVyay5hY2NvdW50cy5kZXYk';
+const clerkFrontendApi="pk_test_bmVhdC1ncnVid29ybS02MS5jbGVyay5hY2NvdW50cy5kZXYk"
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
