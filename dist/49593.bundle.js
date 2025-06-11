@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcredora_blog=self.webpackChunkcredora_blog||[]).push([[49593],{49593:(e,l,n)=>{n.r(l),n.d(l,{default:()=>c});var t=n(96540),a=n.n(t);const c=()=>a().createElement("div",null,a().createElement("h1",null,"Comments in HTML"),a().createElement("p",null,"This page explains how to add comments in HTML code."))}}]);

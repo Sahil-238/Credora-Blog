@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { FiUsers, FiBook, FiAward, FiTrendingUp, FiGlobe, FiCode, FiHeart } from 'react-icons/fi';
 
 const About = () => {
-  const stats = [
+  const stats = [ 
     { number: '10K+', label: 'Active Students', icon: <FiUsers className="w-8 h-8" /> },
     { number: '200+', label: 'Expert Instructors', icon: <FiAward className="w-8 h-8" /> },
     { number: '500+', label: 'Courses', icon: <FiBook className="w-8 h-8" /> },

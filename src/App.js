@@ -12,6 +12,7 @@ import WebDevelopment from './pages/WebDevelopment';
 import DataScience from './pages/DataScience';
 import MobileDevelopment from './pages/MobileDevelopment';
 import UIUXDesign from './pages/UIUXDesign';
+import Notifications from './pages/Notifications';
 
 // Course imports
 import JavaScriptCourse from './TechStack/Courses/JavaScriptCourse/JavaScriptCourse';
@@ -34,6 +35,18 @@ import sqlConfig from './TechStack/Courses/SQLCourse/courseConfig';
 import pythonConfig from './TechStack/Courses/PythonCourse/courseConfig';
 import phpConfig from './TechStack/Courses/PHPCourse/courseConfig';
 import bootstrapConfig from './TechStack/Courses/BootstrapCourse/courseConfig';
+
+// HTML Course Components
+import HTMLCourse from './TechStack/Courses/HTMLCourse/HTMLCourse';
+import Introduction from './TechStack/Courses/HTMLCourse/chapters/basics/Introduction';
+import Editors from './TechStack/Courses/HTMLCourse/chapters/basics/Editors';
+import Basic from './TechStack/Courses/HTMLCourse/chapters/basics/Basic';
+import Elements from './TechStack/Courses/HTMLCourse/chapters/basics/Elements';
+import Attributes from './TechStack/Courses/HTMLCourse/chapters/basics/Attributes';
+import Headings from './TechStack/Courses/HTMLCourse/chapters/basics/Headings';
+import Paragraphs from './TechStack/Courses/HTMLCourse/chapters/basics/Paragraphs';
+import Styles from './TechStack/Courses/HTMLCourse/chapters/basics/Styles';
+import Formatting from './TechStack/Courses/HTMLCourse/chapters/basics/Formatting';
 
 // JavaScript Course Chapters - Basics
 import JSIntroduction from './TechStack/Courses/JavaScriptCourse/chapters/basics/Introduction';
@@ -124,8 +137,11 @@ const isPascalCase = (str) => {
 
 // Import all components dynamically
 const importComponent = (course, category, section) => {
-  if (!componentCache[section.id]) {
-    componentCache[section.id] = React.lazy(() => {
+  // Create a unique cache key that includes the course name and category
+  const cacheKey = `${course}-${category}-${section.id}`;
+  
+  if (!componentCache[cacheKey]) {
+    componentCache[cacheKey] = React.lazy(() => {
       // Convert course name to match directory structure with correct casing
       const courseMapping = {
         'javascript': 'JavaScriptCourse',
@@ -139,66 +155,36 @@ const importComponent = (course, category, section) => {
         'bootstrap': 'BootstrapCourse'
       };
       
-      const courseDir = courseMapping[course.toLowerCase()] || 
-        (course.charAt(0).toUpperCase() + course.slice(1) + 'Course');
-      
-      // Special cases for components that are directly in the chapters directory
-      const directComponents = {
-        JavaScriptCourse: ['Introduction', 'Basics', 'DOM', 'Advanced', 'Projects'],
-        CSSCourse: ['Introduction', 'Basics', 'Layout', 'Advanced'],
-        ReactCourse: ['Introduction', 'Basics', 'Hooks', 'Advanced'],
-        // Add other courses' direct components as needed
-      };
-
-      // Special cases for file names that don't follow the standard convention
-      const specialFileNames = {
-        'typeof': 'typeofOperator',
-        'type-conversion': 'TypeConversion',
-        'data-types': 'DataTypesOverview',
-        'string-methods': 'StringMethods',
-        'string-search': 'StringSearch',
-        'string-templates': 'StringTemplates',
-        'number-methods': 'NumberMethods',
-        'BigInt': 'BigInt',
-        'arrow-function': 'ArrowFunctions',
-        'json': 'JSON',
-        'ajax': 'AJAX',
-        'fetch-api': 'FetchAPI',
-        'dom-intro': 'DOMIntro',
-        'dom-methods': 'DOMMethods',
-        'dom-elements': 'DOMElements',
-        'dom-events': 'DOMEvents',
-        'dom-navigation': 'DOMNavigation',
-        'window': 'WindowObject',
-        'this-keyword': 'thisKeyword',
-        'regexp': 'RegExp',
-        'errors': 'ErrorHandling',
-        'rwd-intro': 'RWDIntro'
-      };
-      
-      // Get the component name, handling special cases
-      const rawComponentName = section.id;
-      const componentName = specialFileNames[rawComponentName] || 
-        rawComponentName.split('-').map(part => 
-          part.charAt(0).toUpperCase() + part.slice(1)
-        ).join('');
-      
-      if (directComponents[courseDir]?.includes(componentName)) {
-        return import(`./TechStack/Courses/${courseDir}/chapters/${componentName}`);
+      const courseDir = courseMapping[course.toLowerCase()];
+      if (!courseDir) {
+        throw new Error(`Unknown course: ${course}`);
       }
+
+      // Get the component name
+      const componentName = isPascalCase(section.id) ? section.id : 
+        toPascalCase(section.id);
+
+      // Construct the import path
+      const importPath = `./TechStack/Courses/${courseDir}/chapters/${category}/${componentName}`;
+      console.log(`Attempting to import: ${importPath} for ${course} course`);
       
-      // For other components, try the category subfolder with both .jsx and .js extensions
-      return import(`./TechStack/Courses/${courseDir}/chapters/${category}/${componentName}.jsx`)
-        .catch(error => 
-          import(`./TechStack/Courses/${courseDir}/chapters/${category}/${componentName}.js`)
-        )
+      return import(`${importPath}.jsx`)
+        .catch(error => import(`${importPath}.js`))
         .catch(error => {
-          console.error(`Failed to load component: ${componentName} in ${category} for ${courseDir}`, error);
-          throw error;
+          console.error(`Failed to load component: ${importPath}`, error);
+          return {
+            default: () => (
+              <div className="p-6 text-center">
+                <h2 className="text-xl text-red-600">Component Not Found</h2>
+                <p className="text-gray-600">Could not load: {section.title}</p>
+                <p className="text-gray-600 mt-2">Course: {course}, Category: {category}</p>
+              </div>
+            )
+          };
         });
     });
   }
-  return componentCache[section.id];
+  return componentCache[cacheKey];
 };
 
 // Error Boundary Component
@@ -241,69 +227,85 @@ function App() {
     <ErrorBoundary>
       <Router>
         <Navbar/>
-        <Suspense fallback={<LoadingFallback />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/introduction" element={<MainIntroduction />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:id" element={<BlogDetail />} />
-            <Route path="/courses/web-development" element={<WebDevelopment />} />
-            <Route path="/courses/data-science" element={<DataScience />} />
-            <Route path="/courses/mobile-development" element={<MobileDevelopment />} />
-            <Route path="/courses/ui-ux-design" element={<UIUXDesign />} />
-            
-            {/* Course Routes with Error Boundaries */}
-            {[
-              { path: "/javascript-course", element: JavaScriptCourse, config: jsConfig },
-              { path: "/css-course", element: CSSCourse, config: cssConfig },
-              { path: "/react-course", element: ReactCourse, config: reactConfig },
-              { path: "/nodejs-course", element: NodeJSCourse, config: nodeConfig },
-              { path: "/java-course", element: JavaCourse, config: javaConfig },
-              { path: "/sql-course", element: SQLCourse, config: sqlConfig },
-              { path: "/python-course", element: PythonCourse, config: pythonConfig },
-              { path: "/php-course", element: PHPCourse, config: phpConfig },
-              { path: "/bootstrap-course", element: BootstrapCourse, config: bootstrapConfig }
-            ].map(({ path, element: CourseComponent, config }) => (
-              <Route
-                key={path}
-                path={path}
-                element={
-                  <ErrorBoundary>
-                    <CourseComponent />
-                  </ErrorBoundary>
-                }
-              >
-                {Object.entries(config).map(([category, { sections }]) =>
-                  sections.map(section => {
-                    const courseName = path.slice(1).split('-')[0]; // Get the course name without the dash and 'course'
-                    const LazyComponent = importComponent(
-                      courseName,
-                      category,
-                      section
-                    );
-                    return (
-                      <Route
-                        key={section.id}
-                        path={section.id}
-                        element={
-                          <ErrorBoundary>
-                            <Suspense fallback={<LoadingFallback />}>
-                              <LazyComponent />
-                            </Suspense>
-                          </ErrorBoundary>
-                        }
-                      />
-                    );
-                  })
-                )}
+        <main className="pt-20">
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/introduction" element={<MainIntroduction />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/blog/:id" element={<BlogDetail />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/web-development" element={<WebDevelopment />} />
+              <Route path="/data-science" element={<DataScience />} />
+              <Route path="/mobile-development" element={<MobileDevelopment />} />
+              <Route path="/ui-ux-design" element={<UIUXDesign />} />
+
+              {/* HTML Course Routes */}
+              <Route path="/html-course" element={<HTMLCourse />}>
+                <Route path="introduction" element={<Introduction />} />
+                <Route path="editors" element={<Editors />} />
+                <Route path="basic" element={<Basic />} />
+                <Route path="elements" element={<Elements />} />
+                <Route path="attributes" element={<Attributes />} />
+                <Route path="headings" element={<Headings />} />
+                <Route path="paragraphs" element={<Paragraphs />} />
+                <Route path="styles" element={<Styles />} />
+                <Route path="formatting" element={<Formatting />} />
               </Route>
-            ))}
-          </Routes>
-        </Suspense>
+
+              {/* Course Routes with Error Boundaries */}
+              {[
+                { path: "/javascript-course", element: JavaScriptCourse, config: jsConfig },
+                { path: "/css-course", element: CSSCourse, config: cssConfig },
+                { path: "/react-course", element: ReactCourse, config: reactConfig },
+                { path: "/nodejs-course", element: NodeJSCourse, config: nodeConfig },
+                { path: "/java-course", element: JavaCourse, config: javaConfig },
+                { path: "/sql-course", element: SQLCourse, config: sqlConfig },
+                { path: "/python-course", element: PythonCourse, config: pythonConfig },
+                { path: "/php-course", element: PHPCourse, config: phpConfig },
+                { path: "/bootstrap-course", element: BootstrapCourse, config: bootstrapConfig },
+              ].map(({ path, element: CourseComponent, config }) => (
+                <Route
+                  key={path}
+                  path={path}
+                  element={
+                    <ErrorBoundary>
+                      <CourseComponent />
+                    </ErrorBoundary>
+                  }
+                >
+                  {Object.entries(config).map(([category, { sections }]) =>
+                    sections.map(section => {
+                      const courseName = path.slice(1).split('-')[0]; // Get the course name without the dash and 'course'
+                      const LazyComponent = importComponent(
+                        courseName,
+                        category,
+                        section
+                      );
+                      return (
+                        <Route
+                          key={section.id}
+                          path={section.id}
+                          element={
+                            <ErrorBoundary>
+                              <Suspense fallback={<LoadingFallback />}>
+                                <LazyComponent />
+                              </Suspense>
+                            </ErrorBoundary>
+                          }
+                        />
+                      );
+                    })
+                  )}
+                </Route>
+              ))}
+            </Routes>
+          </Suspense>
+        </main>
         <Footer/>
       </Router>
     </ErrorBoundary>

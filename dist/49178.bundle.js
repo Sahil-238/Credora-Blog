@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcredora_blog=self.webpackChunkcredora_blog||[]).push([[49178],{49178:(e,t,l)=>{l.r(t),l.d(t,{default:()=>o});var n=l(96540),a=l.n(n);const o=()=>a().createElement("div",null,a().createElement("h1",null,"Quotations in HTML"),a().createElement("p",null,"This page covers how to use quotations in HTML."))}}]);

@@ -6,13 +6,23 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const FormValidation = () => {
-  const basicValidationExample = `function SignupForm() {
+  const basicValidationExample = `import React, { useState } from 'react';
+
+function SignupForm() {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: ''
   });
   const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const validateForm = () => {
     const newErrors = {};
@@ -61,15 +71,19 @@ const FormValidation = () => {
           name="username"
           value={formData.username}
           onChange={handleChange}
+          placeholder="Username"
         />
-        {errors.username && <span>{errors.username}</span>}
+        {errors.username && <span style={{ color: 'red' }}>{errors.username}</span>}
       </div>
-      {/* Other form fields */}
+      {/* Additional fields for email and password */}
     </form>
   );
-}`;
+}
+`;
 
-  const customHookExample = `// Custom validation hook
+  const customHookExample = `import { useState, useEffect } from 'react';
+
+// Custom validation hook
 function useFormValidation(initialState, validate) {
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
@@ -117,7 +131,7 @@ function SignupForm() {
     handleSubmit
   } = useFormValidation(
     { email: '', password: '' },
-    validateSignup
+    validateSignup // define this function to validate form values
   );
 
   return (
@@ -126,14 +140,17 @@ function SignupForm() {
         name="email"
         value={values.email}
         onChange={handleChange}
+        placeholder="Email"
       />
-      {errors.email && <p>{errors.email}</p>}
+      {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
       {/* Other fields */}
     </form>
   );
-}`;
+}
+`;
 
   const schemaValidationExample = `import * as Yup from 'yup';
+import { Formik, Form, Field } from 'formik';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
@@ -171,16 +188,17 @@ function SignupForm() {
     >
       {({ errors, touched }) => (
         <Form>
-          <Field name="username" />
+          <Field name="username" placeholder="Username" />
           {errors.username && touched.username && (
-            <div>{errors.username}</div>
+            <div style={{ color: 'red' }}>{errors.username}</div>
           )}
           {/* Other fields */}
         </Form>
       )}
     </Formik>
   );
-}`;
+}
+`;
 
   return (
     <motion.div
@@ -190,7 +208,7 @@ function SignupForm() {
       className="max-w-4xl mx-auto p-6"
     >
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Form Validation in React</h1>
-      
+
       <section className="mb-8">
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">Understanding Form Validation</h2>
         <p className="text-gray-600 mb-4">

@@ -94,12 +94,12 @@ const courseStructure = {
     title: 'Responsive Design',
     sections: [
       { id: 'rwd-intro', title: 'RWD Intro' },
-      { id: 'viewport', title: 'RWD Viewport' },
-      { id: 'grid-view', title: 'RWD Grid View' },
-      { id: 'media-queries', title: 'RWD Media Queries' },
-      { id: 'images', title: 'RWD Images' },
-      { id: 'videos', title: 'RWD Videos' },
-      { id: 'frameworks', title: 'RWD Frameworks' }
+      { id: 'rwd-viewport', title: 'RWD Viewport' },
+      { id: 'rwd-grid-view', title: 'RWD Grid View' },
+      { id: 'rwd-media-queries', title: 'RWD Media Queries' },
+      { id: 'rwd-images', title: 'RWD Images' },
+      { id: 'rwd-videos', title: 'RWD Videos' },
+      { id: 'rwd-frameworks', title: 'RWD Frameworks' }
     ]
   }
 };

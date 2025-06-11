@@ -1,9 +1,143 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiPackage, FiRefreshCw, FiCode } from 'react-icons/fi';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+// Example 1: useLocalStorage hook
+const useLocalStorage = (key, initialValue) => {
+  // Get initial value from localStorage or use provided initialValue
+  const [storedValue, setStoredValue] = useState(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.error(error);
+      return initialValue;
+    }
+  });
+
+  // Update localStorage when value changes
+  const setValue = value => {
+    try {
+      const valueToStore = value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return [storedValue, setValue];
+};
+
+// Example 2: useWindowSize hook
+const useWindowSize = () => {
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowSize;
+};
+
+// Example 3: useFetch hook
+const useFetch = (url) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(url);
+        const json = await response.json();
+        setData(json);
+        setError(null);
+      } catch (err) {
+        setError('Failed to fetch data');
+        setData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
+};
+
+// Example component using custom hooks
+const UserPreferences = () => {
+  const [theme, setTheme] = useLocalStorage('theme', 'light');
+  
+  return (
+    <div className="p-4 bg-gray-50 rounded">
+      <h3 className="font-semibold mb-2">Theme Preference</h3>
+      <select
+        value={theme}
+        onChange={(e) => setTheme(e.target.value)}
+        className="px-3 py-2 border rounded"
+      >
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+      <p className="mt-2 text-sm text-gray-600">
+        Your preference is saved in localStorage
+      </p>
+    </div>
+  );
+};
+
+const WindowSizeDisplay = () => {
+  const { width, height } = useWindowSize();
+  
+  return (
+    <div className="p-4 bg-gray-50 rounded">
+      <h3 className="font-semibold mb-2">Window Size</h3>
+      <p>Width: {width}px</p>
+      <p>Height: {height}px</p>
+      <p className="mt-2 text-sm text-gray-600">
+        Try resizing your window!
+      </p>
+    </div>
+  );
+};
+
+const UserData = () => {
+  const { data, loading, error } = useFetch('https://jsonplaceholder.typicode.com/users/1');
+  
+  return (
+    <div className="p-4 bg-gray-50 rounded">
+      <h3 className="font-semibold mb-2">User Data</h3>
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
+      ) : data ? (
+        <div>
+          <p>Name: {data.name}</p>
+          <p>Email: {data.email}</p>
+        </div>
+      ) : null}
+    </div>
+  );
+};
 
 const CustomHooks = () => {
   const useLocalStorageExample = `// Custom hook for localStorage
@@ -308,82 +442,165 @@ function SignupForm() {
       </section>
 
       <section className="mb-8">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">useLocalStorage Hook</h2>
-        <p className="text-gray-600 mb-4">
-          A custom hook for persisting state in localStorage, providing a similar API to useState.
-        </p>
-        <SyntaxHighlighter language="jsx" style={atomDark} className="rounded-lg">
-          {useLocalStorageExample}
-        </SyntaxHighlighter>
-      </section>
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Example 1: useLocalStorage</h2>
+        <div className="space-y-4">
+          <UserPreferences />
+          <div className="bg-gray-100 p-4 rounded-lg text-sm font-mono">
+            {`const useLocalStorage = (key, initialValue) => {
+  const [storedValue, setStoredValue] = useState(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      return initialValue;
+    }
+  });
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">useFetch Hook</h2>
-        <p className="text-gray-600 mb-4">
-          A custom hook for handling data fetching, including loading and error states.
-        </p>
-        <SyntaxHighlighter language="jsx" style={atomDark} className="rounded-lg">
-          {useFetchExample}
-        </SyntaxHighlighter>
-      </section>
+  const setValue = value => {
+    try {
+      const valueToStore = value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">useMediaQuery Hook</h2>
-        <p className="text-gray-600 mb-4">
-          A custom hook for responsive design, allowing components to respond to media query changes.
-        </p>
-        <SyntaxHighlighter language="jsx" style={atomDark} className="rounded-lg">
-          {useMediaQueryExample}
-        </SyntaxHighlighter>
-      </section>
+  return [storedValue, setValue];
+};
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">useForm Hook</h2>
-        <p className="text-gray-600 mb-4">
-          A custom hook for form handling, including validation, touched states, and submission.
-        </p>
-        <SyntaxHighlighter language="jsx" style={atomDark} className="rounded-lg">
-          {useFormExample}
-        </SyntaxHighlighter>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Custom Hooks Best Practices</h2>
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <ul className="list-disc list-inside space-y-3 text-gray-600">
-            <li>Always start custom hook names with "use"</li>
-            <li>Keep hooks focused on a single concern</li>
-            <li>Handle cleanup in effects</li>
-            <li>Use TypeScript for better type safety</li>
-            <li>Document hook parameters and return values</li>
-            <li>Consider error boundaries for error handling</li>
-            <li>Write tests for custom hooks</li>
-          </ul>
+// Usage
+const [theme, setTheme] = useLocalStorage('theme', 'light');`}
+          </div>
         </div>
       </section>
 
-      <div className="bg-blue-50 border-l-4 border-blue-500 p-4 my-8">
-        <h3 className="text-lg font-semibold text-blue-800 mb-2">Pro Tips</h3>
-        <ul className="list-disc list-inside space-y-2 text-blue-700">
-          <li>Extract common patterns into hooks</li>
-          <li>Consider hook composition</li>
-          <li>Use dependency arrays wisely</li>
-          <li>Create hook libraries for reuse</li>
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Example 2: useWindowSize</h2>
+        <div className="space-y-4">
+          <WindowSizeDisplay />
+          <div className="bg-gray-100 p-4 rounded-lg text-sm font-mono">
+            {`const useWindowSize = () => {
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowSize;
+};
+
+// Usage
+const { width, height } = useWindowSize();`}
+          </div>
+        </div>
+      </section>
+
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Example 3: useFetch</h2>
+        <div className="space-y-4">
+          <UserData />
+          <div className="bg-gray-100 p-4 rounded-lg text-sm font-mono">
+            {`const useFetch = (url) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(url);
+        const json = await response.json();
+        setData(json);
+        setError(null);
+      } catch (err) {
+        setError('Failed to fetch data');
+        setData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
+};
+
+// Usage
+const { data, loading, error } = useFetch(url);`}
+          </div>
+        </div>
+      </section>
+
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Best Practices</h2>
+        <div className="space-y-4">
+          <div className="bg-green-50 border-l-4 border-green-500 p-4">
+            <p className="text-green-700">
+              <strong>✅ Do:</strong>
+            </p>
+            <ul className="list-disc list-inside mt-2 text-green-700">
+              <li>Start custom hook names with "use"</li>
+              <li>Keep hooks focused on a single concern</li>
+              <li>Handle cleanup in useEffect</li>
+              <li>Use TypeScript for better type safety</li>
+              <li>Document your custom hooks</li>
+            </ul>
+          </div>
+          
+          <div className="bg-red-50 border-l-4 border-red-500 p-4">
+            <p className="text-red-700">
+              <strong>❌ Don't:</strong>
+            </p>
+            <ul className="list-disc list-inside mt-2 text-red-700">
+              <li>Call hooks conditionally</li>
+              <li>Create hooks that do too many things</li>
+              <li>Forget to handle errors</li>
+              <li>Ignore cleanup in effects</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="mb-8">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Common Custom Hooks Patterns</h2>
+        <ul className="list-disc list-inside text-gray-600 space-y-2">
+          <li>State persistence (localStorage, sessionStorage)</li>
+          <li>Data fetching and caching</li>
+          <li>Form handling and validation</li>
+          <li>Media queries and responsive design</li>
+          <li>Animation and transition state</li>
+          <li>Browser APIs (geolocation, clipboard, etc.)</li>
+          <li>WebSocket connections</li>
+          <li>Authentication state</li>
         </ul>
-      </div>
+      </section>
 
       <div className="mt-12 flex justify-between items-center">
         <Link
-          to="/react-course/basic-hooks"
-          className="text-blue-600 hover:text-blue-800 flex items-center"
+          to="/react-course/useMemo"
+          className="text-blue-600 hover:text-blue-800"
         >
-          <FiCode className="mr-2" /> Previous: Basic Hooks
+          ← Previous
         </Link>
         <Link
-          to="/react-course/performance-hooks"
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+          to="/react-course/class-components"
+          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
         >
-          Next: Performance Hooks <FiCode className="ml-2" />
+          Next: Component Patterns →
         </Link>
       </div>
     </motion.div>
