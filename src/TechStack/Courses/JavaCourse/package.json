@@ -1,0 +1,9 @@
+{
+  "name": "java-course-generator",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Generator script for Java course chapters",
+  "dependencies": {
+    "java-course-generator": "file:"
+  }
+}
