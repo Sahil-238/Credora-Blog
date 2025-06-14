@@ -6,6 +6,8 @@ const { Webhook } = require('svix');
 const User = require('./models/User');
 const cors = require('cors');
 
+const path = require('path');
+
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -24,9 +26,17 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use('/webhook', bodyParser.raw({ type: 'application/json' }));
 app.use(express.json());
 
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, '../../build')));
+
 // Health check endpoint
-app.get('/', (req, res) => {
+app.get('/health', (req, res) => {
   res.send('Server is running');
+});
+
+// Catch-all handler to serve React's index.html for any other requests (for React Router)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../build', 'index.html'));
 });
 
 app.post('/webhook', async (req, res) => {
