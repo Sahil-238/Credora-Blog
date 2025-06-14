@@ -2,7 +2,7 @@ services:
   - type: web
     name: credora-blog
     env: node
-    buildCommand: npm install --legacy-peer-deps && npm run build
+    buildCommand: npm ci && npm run build
     startCommand: node backend/src/server.js
     port: 3000
     envVars:
