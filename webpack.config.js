@@ -1,68 +1,36 @@
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.js', // ✅ your confirmed entry point
   output: {
-    path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
-  },
-  resolve: {
-    extensions: ['.js', '.jsx'],
-    fallback: {
-      "fs": false,
-      "path": false,
-      "url": false,
-      "stream": false,
-      "buffer": false,
-      "process": false,
-      "util": false
-    }
+    path: path.resolve(__dirname, 'dist'),
+    clean: true, // optional: clean old build files
   },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        exclude: [/node_modules/, /scripts\/build/],
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
+        test: /\.(js|jsx)$/, // supports both .js and .jsx
+        exclude: /node_modules/,
+        use: 'babel-loader',
       },
       {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader']
+        test: /\.css$/, // for Tailwind and global styles
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
       {
-        test: /\.(mp4|webm|ogg|mp3|wav|m4a|aac|oga)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[path][name].[ext]',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[path][name].[ext]',
-              esModule: false,
-            },
-          },
-        ],
-      },
-    ]
+        test: /\.(png|jpe?g|gif|svg)$/, // for images
+        type: 'asset/resource',
+      }
+    ],
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-    })
-  ]
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+  devServer: {
+    static: './dist',
+    hot: true,
+    historyApiFallback: true, // for React Router
+  },
+  mode: 'production', // or 'development'
 };
