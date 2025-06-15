@@ -40,7 +40,7 @@ const PHPCourse = () => {
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar Navigation */}
-      <div className="fixed top-0 left-0 w-64 h-screen bg-white shadow-lg overflow-y-auto">
+      <div className="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-white shadow-lg overflow-y-auto">
         <div className="p-6">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">PHP Course</h2>
           <nav>
