@@ -609,74 +609,8 @@ function Home() {
           </div>
         </div>
 
-        {/* Enhanced Footer */}
         <footer className="bg-gray-900 text-white py-16">
           <div className="max-w-7xl mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-              {/* Brand Section */}
-              <div className="lg:col-span-1">
-                <div className="flex items-center space-x-3 mb-6">
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                    <Code className="w-6 h-6 text-white" />
-                  </div>
-                  <span className="text-2xl font-bold">Credora</span>
-                </div>
-                <p className="text-gray-400 leading-relaxed mb-6">
-                  Empowering the next generation of developers through innovative, hands-on programming education.
-                </p>
-                <div className="flex space-x-4">
-                  <div className="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-300">
-                    <Globe className="w-5 h-5" />
-                  </div>
-                  <div className="w-10 h-10 bg-gray-800 hover:bg-purple-600 rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-300">
-                    <Users className="w-5 h-5" />
-                  </div>
-                  <div className="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center cursor-pointer transition-colors duration-300">
-                    <Star className="w-5 h-5" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Courses Section */}
-              <div>
-                <h4 className="text-lg font-semibold mb-6">Popular Courses</h4>
-                <ul className="space-y-3 text-gray-400">
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Web Development</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">React Mastery</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Python for AI</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Machine Learning</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Data Science</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">JavaScript Advanced</li>
-                </ul>
-              </div>
-
-              {/* Company Section */}
-              <div>
-                <h4 className="text-lg font-semibold mb-6">Company</h4>
-                <ul className="space-y-3 text-gray-400">
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">About Us</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Our Mission</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Careers</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Press & Media</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Success Stories</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Partner With Us</li>
-                </ul>
-              </div>
-
-              {/* Support Section */}
-              <div>
-                <h4 className="text-lg font-semibold mb-6">Support</h4>
-                <ul className="space-y-3 text-gray-400">
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Help Center</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Community Forum</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Contact Support</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">System Status</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Privacy Policy</li>
-                  <li className="hover:text-white cursor-pointer transition-colors duration-300">Terms of Service</li>
-                </ul>
-              </div>
-            </div>
-
             {/* Bottom Footer */}
             <div className="border-t border-gray-800 mt-12 pt-8">
               <div className="flex flex-col md:flex-row justify-between items-center">

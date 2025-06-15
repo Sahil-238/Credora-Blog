@@ -53,21 +53,27 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const handleDropdown = (index) => setActiveDropdown(activeDropdown === index ? null : index);
 
+  // Close mobile menu when clicking on a link
+  const handleMobileLinkClick = () => {
+    setIsMenuOpen(false);
+    setActiveDropdown(null);
+  };
+
   return (
-<nav className="absolute top-0 left-0 z-50 w-full bg-transparent backdrop-blur-sm bg-white/20 shadow-sm m-0 p-0 border-0">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 m-0">
-        <div className="flex items-center justify-between h-16 lg:h-20 m-0 p-0">
+    <nav className="fixed top-0 left-0 z-50 w-full bg-white/95 backdrop-blur-sm shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0 m-0 p-0">
+          <Link to="/" className="flex-shrink-0 z-50">
             <img src={assets.logo} alt="EduNest" className="h-8 lg:h-10 w-auto" />
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center space-x-1 m-0 p-0">
+          <div className="hidden lg:flex items-center space-x-1">
             {navItems.map((item, index) => (
               <div
                 key={index}
-                className="relative m-0 p-0"
+                className="relative"
                 ref={el => dropdownRefs.current[index] = el}
               >
                 {item.hasDropdown ? (
@@ -113,13 +119,13 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Right */}
-          <div className="hidden lg:flex items-center space-x-4 m-0 p-0">
+          <div className="hidden lg:flex items-center space-x-4">
             <button className="p-2 rounded-lg text-gray-900 hover:text-blue-600 hover:bg-blue-50">
               <Search className="h-5 w-5" />
             </button>
             <Link to="/notifications" className="p-2 rounded-lg relative text-gray-900 hover:text-blue-600 hover:bg-blue-50">
-            <Bell className="h-5 w-5" />
-            <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
+              <Bell className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
             </Link>
 
             {isSignedIn ? (
@@ -141,24 +147,32 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="lg:hidden m-0 p-0">
-            <button onClick={toggleMenu} className="p-2 rounded-lg text-gray-900 hover:text-blue-600 hover:bg-blue-50">
+          <div className="lg:hidden z-50">
+            <button 
+              onClick={toggleMenu} 
+              className="p-2 rounded-lg text-gray-900 hover:text-blue-600 hover:bg-blue-50 touch-manipulation"
+              aria-label="Toggle menu"
+            >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Mobile Nav */}
-        <div className={`lg:hidden transition-all duration-300 overflow-hidden ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
-          <div className="rounded-xl mt-4 shadow-xl border border-gray-100 p-4 space-y-2 bg-white bg-opacity-90 backdrop-blur-sm">
+      {/* Mobile Nav */}
+      <div className={`lg:hidden fixed top-16 left-0 right-0 z-40 transition-all duration-300 ${
+        isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+      }`}>
+        <div className="bg-white shadow-xl border-t border-gray-100 max-h-[calc(100vh-4rem)] overflow-y-auto">
+          <div className="px-4 py-6 space-y-2">
             {navItems.map((item, index) => (
               <div key={index}>
                 <Link
                   to={item.href}
-                  className={`block px-2 py-2 text-gray-900 font-medium hover:text-blue-600 hover:bg-blue-50 rounded-md ${
+                  className={`block px-4 py-3 text-gray-900 font-medium hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors touch-manipulation ${
                     location.pathname === item.href ? 'bg-blue-50 text-blue-600 font-semibold' : ''
                   }`}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={handleMobileLinkClick}
                 >
                   {item.name}
                 </Link>
@@ -166,8 +180,8 @@ const Navbar = () => {
                   <Link
                     key={i}
                     to={drop.href}
-                    className="block px-6 py-1 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md"
-                    onClick={() => setIsMenuOpen(false)}
+                    className="block px-8 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors touch-manipulation"
+                    onClick={handleMobileLinkClick}
                   >
                     {drop.name}
                   </Link>
@@ -175,22 +189,38 @@ const Navbar = () => {
               </div>
             ))}
 
-            <div className="pt-4 border-t border-gray-200">
+            <div className="pt-6 border-t border-gray-200 space-y-3">
+              <div className="flex items-center justify-center space-x-4 mb-4">
+                <button className="p-2 rounded-lg text-gray-900 hover:text-blue-600 hover:bg-blue-50 touch-manipulation">
+                  <Search className="h-5 w-5" />
+                </button>
+                <Link 
+                  to="/notifications" 
+                  className="p-2 rounded-lg relative text-gray-900 hover:text-blue-600 hover:bg-blue-50 touch-manipulation"
+                  onClick={handleMobileLinkClick}
+                >
+                  <Bell className="h-5 w-5" />
+                  <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
+                </Link>
+              </div>
+              
               {isSignedIn ? (
-                <UserButton afterSignOutUrl="/" />
+                <div className="flex justify-center">
+                  <UserButton afterSignOutUrl="/" />
+                </div>
               ) : (
-                <>
+                <div className="space-y-3">
                   <SignInButton>
-                    <button className="w-full mb-2 bg-blue-100 text-blue-700 py-2 rounded-lg font-medium hover:bg-blue-200">
+                    <button className="w-full bg-blue-100 text-blue-700 py-3 rounded-lg font-medium hover:bg-blue-200 touch-manipulation">
                       Sign In
                     </button>
                   </SignInButton>
                   <SignUpButton>
-                    <button className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700">
+                    <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 touch-manipulation">
                       Sign Up
                     </button>
                   </SignUpButton>
-                </>
+                </div>
               )}
             </div>
           </div>
@@ -199,7 +229,11 @@ const Navbar = () => {
 
       {/* Overlay */}
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-black/20 lg:hidden z-40" onClick={toggleMenu}></div>
+        <div 
+          className="fixed inset-0 bg-black/20 lg:hidden z-30" 
+          onClick={toggleMenu}
+          aria-hidden="true"
+        />
       )}
     </nav>
   );
