@@ -51,7 +51,7 @@ const JavaCourse = () => {
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar Navigation */}
-      <div className="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-white shadow-lg overflow-y-auto">
+      <div className="hidden md:fixed md:top-16 md:left-0 md:w-64 md:h-[calc(100vh-4rem)] md:bg-white md:shadow-lg md:overflow-y-auto md:block">
         <div className="p-4">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Java Course</h2>
           <nav>
@@ -84,7 +84,7 @@ const JavaCourse = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 ml-64 p-8">
+      <div className="flex-1 md:ml-64 p-4 md:p-8">
         <Outlet />
       </div>
     </div>

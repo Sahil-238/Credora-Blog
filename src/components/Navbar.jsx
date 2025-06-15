@@ -3,6 +3,7 @@ import { Menu, X, ChevronDown, Search, Bell } from 'lucide-react';
 import { useUser, UserButton, SignInButton, SignUpButton } from "@clerk/clerk-react";
 import { Link, useLocation } from "react-router-dom";
 import { assets } from '../assets/assets';
+import MobileSidebar from './MobileSidebar';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -78,7 +79,8 @@ const Navbar = () => {
           <Link to="/" className="flex-shrink-0 z-50 flex items-center m-0 p-0">
             <img src={assets.logo} alt="EduNest" className="h-8 lg:h-10 w-auto m-0 p-0" />
           </Link>
-          <div className="lg:hidden z-50 flex items-center ml-auto">
+          {/* Hamburger for mobile and tablet only */}
+          <div className="flex lg:hidden z-50 items-center ml-auto">
             <button 
               onClick={toggleMenu} 
               className="p-2 rounded-lg text-gray-900 hover:text-blue-600 hover:bg-blue-50/50 transition-colors duration-200"
@@ -167,93 +169,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Nav */}
-      <div className={`lg:hidden fixed inset-x-0 top-16 z-40 transition-all duration-300 transform ${
-        isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0 pointer-events-none'
-      }`}>
-        <div className="bg-gradient-to-b from-white to-gray-50 shadow-xl border-t border-gray-100 max-h-[calc(100vh-4rem)] overflow-y-auto">
-          <div className="px-4 py-6 space-y-2">
-            {navItems.map((item, index) => (
-              <div key={index}>
-                {item.hasDropdown ? (
-                  <div>
-                    <button
-                      onClick={() => handleDropdown(index)}
-                      className="w-full flex items-center justify-between px-4 py-3 text-gray-900 font-medium hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-colors duration-200"
-                    >
-                      {item.name}
-                      <ChevronDown className={`h-4 w-4 transform transition-transform duration-200 ${activeDropdown === index ? 'rotate-180' : ''}`} />
-                    </button>
-                    <div className={`pl-4 space-y-1 transition-all duration-200 ${
-                      activeDropdown === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
-                    }`}>
-                      {item.dropdownItems.map((drop, i) => (
-                        <Link
-                          key={i}
-                          to={drop.href}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-colors duration-200"
-                          onClick={() => {
-                            setActiveDropdown(null);
-                            setIsMenuOpen(false);
-                          }}
-                        >
-                          {drop.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <Link
-                    to={item.href}
-                    className={`block px-4 py-3 text-gray-900 font-medium hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-colors duration-200 ${
-                      location.pathname === item.href ? 'bg-blue-50/50 text-blue-600 font-semibold' : ''
-                    }`}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                )}
-              </div>
-            ))}
-
-            <div className="pt-6 border-t border-gray-200 space-y-3">
-              <div className="flex items-center justify-center space-x-4 mb-4">
-                <button className="p-2 rounded-lg text-gray-900 hover:text-blue-600 hover:bg-blue-50/50 transition-colors duration-200">
-                  <Search className="h-5 w-5" />
-                </button>
-                <Link 
-                  to="/notifications" 
-                  className="p-2 rounded-lg relative text-gray-900 hover:text-blue-600 hover:bg-blue-50/50 transition-colors duration-200"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <Bell className="h-5 w-5" />
-                  <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
-                </Link>
-              </div>
-              
-              {isSignedIn ? (
-                <div className="flex justify-center">
-                  <UserButton afterSignOutUrl="/" />
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  <SignInButton>
-                    <button className="w-full bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 py-3 rounded-lg font-medium hover:from-blue-100 hover:to-blue-200 transition-all duration-200">
-                      Sign In
-                    </button>
-                  </SignInButton>
-                  <SignUpButton>
-                    <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200">
-                      Sign Up
-                    </button>
-                  </SignUpButton>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Overlay */}
       {isMenuOpen && (
         <div 
@@ -262,6 +177,7 @@ const Navbar = () => {
           aria-hidden="true"
         />
       )}
+      <MobileSidebar open={isMenuOpen} onClose={toggleMenu} />
     </nav>
   );
 };

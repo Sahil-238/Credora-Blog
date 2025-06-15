@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiBook, FiCode, FiLayout, FiTool, FiBox, FiServer, FiGlobe, FiCheckCircle, FiAward } from 'react-icons/fi';
@@ -19,6 +19,7 @@ const categoryIcons = {
 };
 
 const ReactCourse = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -89,6 +90,15 @@ const ReactCourse = () => {
       <div className="flex-1 ml-64 p-8">
         <Outlet />
       </div>
+
+      <button
+        className="sidebar-toggle md:hidden fixed top-6 left-4 z-[60] p-2 rounded-full bg-white shadow hover:bg-blue-100 transition-colors"
+        onClick={() => setSidebarOpen(true)}
+        aria-label="Open sidebar"
+        title="Open sidebar"
+      >
+        <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M4 12h16M4 17h16" /></svg>
+      </button>
     </div>
   );
 };

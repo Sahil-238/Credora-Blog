@@ -3,17 +3,17 @@ import { Outlet } from 'react-router-dom';
 import NavbarJS from './NavbarJS';
 import CourseSidebar from './CourseSidebar';
 
-function JavaScriptPage() {
+function PythonPage() {
   const sections = [
-    { id: 'introduction', title: 'Introduction to JavaScript' },
-    { id: 'basics', title: 'JavaScript Basics' },
+    { id: 'introduction', title: 'Introduction to Python' },
+    { id: 'basics', title: 'Python Basics' },
     { id: 'variables', title: 'Variables and Data Types' },
-    { id: 'functions', title: 'Functions and Scope' },
-    { id: 'objects', title: 'Objects and Arrays' },
-    { id: 'dom', title: 'DOM Manipulation' },
-    { id: 'events', title: 'Events and Event Handling' },
-    { id: 'async', title: 'Asynchronous JavaScript' },
-    { id: 'advanced', title: 'Advanced Concepts' },
+    { id: 'functions', title: 'Functions and Modules' },
+    { id: 'data-structures', title: 'Data Structures' },
+    { id: 'oop', title: 'Object-Oriented Programming' },
+    { id: 'file-handling', title: 'File Handling' },
+    { id: 'libraries', title: 'Python Libraries' },
+    { id: 'advanced', title: 'Advanced Python' },
   ];
 
   return (
@@ -33,4 +33,4 @@ function JavaScriptPage() {
   );
 }
 
-export default JavaScriptPage;
+export default PythonPage; 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiBook, FiCode, FiBox, FiDatabase, FiFileText, FiTool, FiPackage, FiAward } from 'react-icons/fi';
@@ -17,6 +17,7 @@ const categoryIcons = {
 };
 
 const CCourse = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -45,7 +46,7 @@ const CCourse = () => {
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar Navigation */}
-      <div className="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-white shadow-lg overflow-y-auto">
+      <div className="hidden md:fixed md:top-16 md:left-0 md:w-64 md:h-[calc(100vh-4rem)] md:bg-white md:shadow-lg md:overflow-y-auto md:block">
         <div className="p-4">
           <h2 className="text-xl font-bold text-gray-800 mb-4">C Programming</h2>
           <nav>
@@ -78,9 +79,18 @@ const CCourse = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 ml-64 p-8">
+      <div className="flex-1 md:ml-64 p-4 md:p-8">
         <Outlet />
       </div>
+
+      <button
+        className="sidebar-toggle md:hidden fixed top-6 left-4 z-[60] p-2 rounded-full bg-white shadow hover:bg-blue-100 transition-colors"
+        onClick={() => setSidebarOpen(true)}
+        aria-label="Open sidebar"
+        title="Open sidebar"
+      >
+        <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M4 12h16M4 17h16" /></svg>
+      </button>
     </div>
   );
 };

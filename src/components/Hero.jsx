@@ -1,9 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Search, Play, ArrowRight, ChevronRight, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import heroBg from '../video/hero-bg.mp4';
 
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [showResults, setShowResults] = useState(false);
+  const navigate = useNavigate();
+  const searchRef = useRef(null);
+
+  // Combined list of all courses
+  const allCourses = [
+    { title: "JavaScript", path: "/javascript-course", category: "Web Development" },
+    { title: "CSS", path: "/css-course", category: "Web Development" },
+    { title: "React", path: "/react-course", category: "Web Development" },
+    { title: "Node.js", path: "/nodejs-course", category: "Web Development" },
+    { title: "Java", path: "/java-course", category: "Web Development" },
+    { title: "Python", path: "/python-course", category: "AI & ML" },
+    { title: "PHP", path: "/php-course", category: "Web Development" },
+    { title: "SQL", path: "/sql-course", category: "Web Development" },
+    { title: "Bootstrap", path: "/bootstrap-course", category: "Web Development" },
+    { title: "Data Science", path: "/data-science", category: "Data Science" },
+    { title: "Machine Learning", path: "/machine-learning", category: "AI & ML" },
+    { title: "Mobile Development", path: "/mobile-development", category: "Mobile" },
+    { title: "UI/UX Design", path: "/ui-ux-design", category: "Design" },
+    { title: "C", path: "/c-course", category: "Programming Languages" },
+  ];
+
+  // Filter courses based on search query
+  const filteredCourses = searchQuery
+    ? allCourses.filter(course =>
+        course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        course.category.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : [];
+
+  const handleCourseClick = (path) => {
+    navigate(path);
+    setShowResults(false);
+    setSearchQuery('');
+  };
+
+  // Hide dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowResults(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -44,20 +93,55 @@ const Hero = () => {
           Transform your career with hands-on programming courses designed by industry experts. Learn by building real projects that matter.
         </p>
         
-        {/* Enhanced Search Bar */}
-        <div className="w-full max-w-3xl mb-12">
+        {/* Enhanced Search Bar with Results */}
+        <div className="w-full max-w-3xl mb-12 relative" ref={searchRef}>
           <div className="relative group">
             <input
               type="text"
               placeholder="What do you want to learn today?"
-              className="w-full px-6 sm:px-8 py-4 sm:py-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent text-base sm:text-lg transition-all duration-300 group-hover:bg-white/15"
+              className="w-full px-6 sm:px-8 py-4 sm:py-6 rounded-2xl bg-transparent backdrop-blur-md border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent text-base sm:text-lg transition-all duration-300"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowResults(true);
+              }}
+              onFocus={() => {
+                if (searchQuery.length > 0) setShowResults(true);
+              }}
             />
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
               <Search className="text-white/60 w-5 h-5 sm:w-6 sm:h-6" />
             </div>
           </div>
+
+          {/* Search Results Dropdown */}
+          {showResults && searchQuery.length > 0 && (
+            <div className="absolute w-full mt-2 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-white/20 max-h-96 overflow-y-auto z-50">
+              {filteredCourses.length > 0 ? (
+                filteredCourses.map((course, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleCourseClick(course.path)}
+                    className="w-full px-6 py-4 text-left hover:bg-white/20 transition-colors duration-200 flex items-center justify-between group"
+                  >
+                    <div>
+                      <div className="text-gray-900 font-medium group-hover:text-blue-600">
+                        {course.title}
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        {course.category}
+                      </div>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                  </button>
+                ))
+              ) : (
+                <div className="px-6 py-4 text-gray-600">
+                  No courses found matching "{searchQuery}"
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* CTA Buttons */}

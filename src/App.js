@@ -24,6 +24,7 @@ import SQLCourse from './TechStack/Courses/SQLCourse/SQLCourse';
 import PythonCourse from './TechStack/Courses/PythonCourse/PythonCourse';
 import PHPCourse from './TechStack/Courses/PHPCourse/PHPCourse';
 import BootstrapCourse from './TechStack/Courses/BootstrapCourse/BootstrapCourse';
+import CCourse from './TechStack/Courses/CCourse/CCourse';
 
 // Course configurations
 import jsConfig from './TechStack/Courses/JavaScriptCourse/courseConfig';
@@ -35,6 +36,7 @@ import sqlConfig from './TechStack/Courses/SQLCourse/courseConfig';
 import pythonConfig from './TechStack/Courses/PythonCourse/courseConfig';
 import phpConfig from './TechStack/Courses/PHPCourse/courseConfig';
 import bootstrapConfig from './TechStack/Courses/BootstrapCourse/courseConfig';
+import cConfig from './TechStack/Courses/CCourse/courseConfig';
 
 // HTML Course Components
 import HTMLCourse from './TechStack/Courses/HTMLCourse/HTMLCourse';
@@ -152,7 +154,8 @@ const importComponent = (course, category, section) => {
         'sql': 'SQLCourse',
         'python': 'PythonCourse',
         'php': 'PHPCourse',
-        'bootstrap': 'BootstrapCourse'
+        'bootstrap': 'BootstrapCourse',
+        'c': 'CCourse'
       };
       
       const courseDir = courseMapping[course.toLowerCase()];
@@ -268,6 +271,7 @@ function App() {
                 { path: "/python-course", element: PythonCourse, config: pythonConfig },
                 { path: "/php-course", element: PHPCourse, config: phpConfig },
                 { path: "/bootstrap-course", element: BootstrapCourse, config: bootstrapConfig },
+                { path: "/c-course", element: CCourse, config: cConfig }
               ].map(({ path, element: CourseComponent, config }) => (
                 <Route
                   key={path}

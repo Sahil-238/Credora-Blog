@@ -33,7 +33,7 @@ const categoryIcons = {
 const HTMLCourse = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Effect to handle initial navigation and scroll position
   useEffect(() => {
@@ -60,17 +60,17 @@ const HTMLCourse = () => {
   // Close sidebar when clicking outside on mobile
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isSidebarOpen && !event.target.closest('.sidebar') && !event.target.closest('.menu-button')) {
-        setIsSidebarOpen(false);
+      if (sidebarOpen && !event.target.closest('.sidebar') && !event.target.closest('.menu-button')) {
+        setSidebarOpen(false);
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isSidebarOpen]);
+  }, [sidebarOpen]);
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
+    setSidebarOpen(!sidebarOpen);
   };
 
   const handleSectionClick = (sectionId) => {
@@ -104,6 +104,14 @@ const HTMLCourse = () => {
       <div className="course-content">
         <Outlet />
       </div>
+      <button
+        className="sidebar-toggle md:hidden fixed top-6 left-4 z-[60] p-2 rounded-full bg-white shadow hover:bg-blue-100 transition-colors"
+        onClick={() => setSidebarOpen(true)}
+        aria-label="Open sidebar"
+        title="Open sidebar"
+      >
+        <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M4 12h16M4 17h16" /></svg>
+      </button>
     </div>
   );
 };
