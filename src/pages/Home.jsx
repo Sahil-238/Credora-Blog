@@ -609,27 +609,6 @@ function Home() {
           </div>
         </div>
 
-        <footer className="bg-gray-900 text-white py-16">
-          <div className="max-w-7xl mx-auto px-4">
-            {/* Bottom Footer */}
-            <div className="border-t border-gray-800 mt-12 pt-8">
-              <div className="flex flex-col md:flex-row justify-between items-center">
-                <div className="text-gray-400 mb-4 md:mb-0">
-                  © 2024 Credora. All rights reserved. Crafted with ❤️ for developers worldwide.
-                </div>
-                <div className="flex items-center space-x-6 text-gray-400">
-                  <span className="hover:text-white cursor-pointer transition-colors duration-300">Privacy</span>
-                  <span className="hover:text-white cursor-pointer transition-colors duration-300">Terms</span>
-                  <span className="hover:text-white cursor-pointer transition-colors duration-300">Cookies</span>
-                  <div className="flex items-center space-x-2">
-                    <Globe className="w-4 h-4" />
-                    <span className="hover:text-white cursor-pointer transition-colors duration-300">English</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
       </main>
     </div>
   );
